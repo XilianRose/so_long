@@ -22,6 +22,31 @@ void hook(void* param)
 	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
 		img->instances[0].x += 5;
 }
+/* error check
+- no. of arguments ~
+- (malloc a struct)
+- correct file xtensions ~
+- opening & reading of the map (gnl)
+- map check
+- char check
+- xpm
+
+exit function?
+- windows: mlx_destroy_window
+- mlx: mlx_distroy_display + free
+- sprites: mlx_destroy_image
+- free
+
+- initialize struct as NULL
+
+- render map mlx_image_to_window
+
+- register input with hooks (event_key)
+- function to check if action is valid
+
+- bonus -> movement /w mlx_string_put
+
+- function for window close */
 
 int32_t	main(void)
 {
