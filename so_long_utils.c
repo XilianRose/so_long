@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   so_long.h                                          :+:    :+:            */
+/*   so_long_utils.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/03/02 12:46:26 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/04/05 14:52:53 by mstegema      ########   odam.nl         */
+/*   Created: 2023/04/05 13:40:32 by mstegema      #+#    #+#                 */
+/*   Updated: 2023/04/06 11:28:30 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#include "../so_long.h"
 
-# include <fcntl.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <math.h>
-# include <stdbool.h>
-# include "libft.h"
-# include "MLX42/include/MLX42/MLX42.h"
+/*	this function first free's the allocated rows, then the map itself and then
+	set's them to NULL. This is done after checking it can be freed */
 
-typedef struct Map {
-	int	rows;
-	int	cols;
-	int	size;
-}	map
+void	free_map(char **map)
+{
+	int	i;
 
-#endif
+	i = 0;
+	while (map != NULL && map[i] != NULL)
+	{
+		free(map[i]);
+		map[i] = NULL;
+		i++;
+	}
+	if (map != NULL)
+	{
+		free(map);
+		map == NULL;
+	}
+}
