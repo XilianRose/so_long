@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 12:46:26 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/04/05 14:52:53 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/04/21 14:21:45 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,18 @@
 # include "libft.h"
 # include "MLX42/include/MLX42/MLX42.h"
 
-typedef struct Map {
-	int	rows;
-	int	cols;
-	int	size;
-}	map
+typedef struct s_component {
+	int		count;
+	char	*position;
+}	t_component;
+
+typedef struct s_map_info {
+	int			rows;
+	int			cols;
+	char		**grid;
+	t_component	player;
+	t_component	collectible;
+	t_component	exit;
+}	t_map_info;
 
 #endif

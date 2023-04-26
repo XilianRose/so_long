@@ -6,80 +6,44 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 11:41:05 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/04/06 15:25:44 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/04/26 16:14:48 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-/* this function */
-static char	*save_map(int fd, int rows, int cols)
+/*	this function allocates the memory for the map. */
+t_map_info	allocate_map(t_map_info map)
 {
-	char	**map;
+	char	**arr;
 	int		i;
 
 	i = 0;
-	map = ft_calloc(rows + 1, sizeof(char *));
-	if (!map)
+	arr = ft_calloc(map.rows + 1, sizeof(char *));
+	if (!arr)
 		return (ft_printf("\nERROR\nmalloc failed\n"), NULL);
-	while (i < rows)
+	while (i <= map.rows)
 	{
-		map[i] = ft_calloc(cols + 1, sizeof(char));
-		if (!map[i])
-			return (ft_free_map(map), ft_printf("\nERROR\nmalloc failed\n"), NULL);
+		arr[i] = ft_calloc(map.cols + 1, sizeof(char));
+		if (!arr[i])
+			return (ft_free_map(arr), ft_printf("\nERROR\nmalloc failed\n"), NULL);
+		i++;
 	}
-
+	map.grid = arr;
+	return (map);
 }
-
-/* this functions checks if the given row contains only valid map components.
-	It returns 'true' if it does and 'false' if it doesn't */
-
-bool	mapcomponents_check(char *row, int len)
+/*	this function copies the map from the file to the allocated memory */
+t_map_info	save_map(int fd, t_map_info map)
 {
 	int	i;
 
 	i = 0;
-	while (i < len)
+	while (i <= map.rows)
 	{
-		if (row[i] == '0' || row[i] == '1' || row[i] == 'C' || row[i] == 'E'
-			|| row[i] == 'P')
-			i++;
-		else
-			return (false);
+		map.grid[i] = get_next_line(fd);
+		i++;
 	}
-	if (row[i] == '0' || row[i] == '1' || row[i] == 'C' || row[i] == 'E'
-		|| row[i] == 'P')
-		return (true);
-	else
-		return (false);
-}
-
-/* this function checks if the map has a valid shape */
-
-char	*mapshape_check(int fd)
-{
-	int		rows;
-	int		cols;
-	char	*row;
-
-	rows = 1;
-	cols = 0;
-	row = get_next_line(fd);
-	if (row == NULL)
-		return (ft_printf("\nERROR\nmap is empty\n"), NULL);
-	cols = ft_strlen(row);
-	while ((row = get_next_line(fd)) != NULL)
-	{
-		if (ft_strlen(row) != cols)
-		{
-			ft_printf("\nERROR\nmap is not rectangular\n");
-			return (ft_freestr(row), NULL);
-		}
-		ft_freestr(row);
-		rows++;
-	}
-	if (rows < 3)
-		return (ft_printf("\nERROR\nmap is too small\n"), ft_freestr(row), NULL);
+	return (map);
 }
 
 /*	the main checks if there's a ".ber" file given as input and opens it if
@@ -87,7 +51,8 @@ char	*mapshape_check(int fd)
 
 void	main(int argc, char **argv)
 {
-	int	fd;
+	int			fd;
+	t_map_info	map;
 
 	if (argc != 2)
 		return (ft_printf("\nERROR\nplease give one filename as argument\n"));
