@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:40:32 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/04/06 11:28:30 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/04/28 16:13:16 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,12 @@ void	free_map(char **map)
 		free(map);
 		map == NULL;
 	}
+}
+
+void	error_output(void)
+{
+	t_error	file_err;
+
+	file_err.no00 = "\nERROR\nplease give one filename as argument\n";
+	return ;
 }

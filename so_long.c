@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 11:41:05 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/04/26 16:14:48 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/04/28 16:12:40 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	main(int argc, char **argv)
 	t_map_info	map;
 
 	if (argc != 2)
-		return (ft_printf("\nERROR\nplease give one filename as argument\n"));
+		return (ft_printf("%s", file_err.no00));
 	if (ft_strendstr(argv[1], ".ber") == NULL)
 		return (ft_printf("\nERROR\nnot a '.ber' map description file\n"));
 	fd = open(argv[1], O_RDONLY);
