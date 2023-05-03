@@ -6,14 +6,14 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 11:41:05 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/04/28 16:12:40 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/05/03 15:52:34 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
 /*	this function allocates the memory for the map. */
-t_map_info	allocate_map(t_map_info map)
+void	allocate_map(t_map_info map)
 {
 	char	**arr;
 	int		i;
@@ -30,10 +30,11 @@ t_map_info	allocate_map(t_map_info map)
 		i++;
 	}
 	map.grid = arr;
-	return (map);
+	return ;
 }
+
 /*	this function copies the map from the file to the allocated memory */
-t_map_info	save_map(int fd, t_map_info map)
+void	save_map(int fd, t_map_info map)
 {
 	int	i;
 
@@ -43,7 +44,7 @@ t_map_info	save_map(int fd, t_map_info map)
 		map.grid[i] = get_next_line(fd);
 		i++;
 	}
-	return (map);
+	return ;
 }
 
 /*	the main checks if there's a ".ber" file given as input and opens it if
@@ -57,14 +58,18 @@ void	main(int argc, char **argv)
 	if (argc != 2)
 		return (ft_printf("%s", file_err.no00));
 	if (ft_strendstr(argv[1], ".ber") == NULL)
-		return (ft_printf("\nERROR\nnot a '.ber' map description file\n"));
+		return (ft_printf("%s", file_err.no01));
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
 	{
-		ft_printf("\nERROR\nencountered problem while opening the file\n");
+		ft_printf("%s", file_err.no02);
 		return (close(fd));
 	}
-/* insert fuction to read map */
+
+/* map validation */
+/* map saving */
+/* window handling */
+
 	close(fd);
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:40:32 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/04/28 16:13:16 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/05/03 15:43:09 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,19 @@ void	free_map(char **map)
 void	error_output(void)
 {
 	t_error	file_err;
+	t_error	map_error;
 
-	file_err.no00 = "\nERROR\nplease give one filename as argument\n";
+	file_err.no00 = "\nError\nplease give one filename as argument\n";
+	file_err.no01 = "\nError\nnot a '.ber' map description file\n";
+	file_err.no02 = "\nError\nencountered problem while opening the file\n";
+
+	map_err.no00 = "";
+	map_err.no01 = "\nError\nmap is empty\n";
+	map_err.no02 = "\nError\nmap is too narrow\n";
+	map_err.no03 = "\nError\nmap is not a rectangle\n";
+	map_err.no04 = "\nError\nmap is too short\n";
+	map_err.no05 = "\nError\nmap has more than 1 exit or starting position\n";
+	map_err.no06 = "";
+	map_err.no07 = "\nError\nmap contains invalid map components\n";
 	return ;
 }

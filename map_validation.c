@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:39:27 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/04/28 16:13:18 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/05/03 15:52:29 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,22 @@
 
 /* this functions checks if the given row contains only valid map components.
 	It returns 'true' if it does and 'false' if it doesn't */
+
+bool	mapwalled_check(t_map_info map)
+{
+	char	*str;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	str = map.grid[0];
+	while(str[i] != \0)
+	{
+		if(ft_strchr("1", str) != NULL)
+			i++;
+	}
+}
 
 bool	mapcomponents_check(char *row, t_map_info map)
 {

@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 12:46:26 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/04/28 16:10:22 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/05/03 14:56:04 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_error {
 	char	*no22;
 	char	*no23;
 	char	*no24;
+	char	*no25;
 }	t_error;
 
 #endif
