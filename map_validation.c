@@ -6,31 +6,41 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:39:27 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/05/03 15:52:29 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/05/10 16:32:07 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-/* this functions checks if the given row contains only valid map components.
-	It returns 'true' if it does and 'false' if it doesn't */
-
+/*	this functions checks if the map is surrounded by walls or not.
+	it first compares the chars in the first and last row at the same time, then
+	it compares the chars in the first and last column at the same time. If, at
+	any time, the char is not '1' it wil return an error message and false. */
 bool	mapwalled_check(t_map_info map)
 {
-	char	*str;
 	int		i;
-	int		j;
 
 	i = 0;
-	j = 0;
-	str = map.grid[0];
-	while(str[i] != \0)
+	while (i < map.cols)
 	{
-		if(ft_strchr("1", str) != NULL)
+		if (map.grid[0][i] == '1' && map.grid[map.rows][i] == '1')
 			i++;
+		else
+			return (ft_printf("\nERROR\nmap is not walled\n"), false);
 	}
+	i = 0;
+	while (i < map.rows)
+	{
+		if (map.grid[i][0] == '1' && map.grid[i][map.cols] == '1')
+			i++;
+		else
+			return (ft_printf("\nERROR\nmap is not walled\n"), false);
+	}
+	return (true);
 }
 
+/*	this functions checks if the given row contains only valid map components.
+	It returns 'true' if it does and 'false' if it doesn't */
 bool	mapcomponents_check(char *row, t_map_info map)
 {
 	int	i;
