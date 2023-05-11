@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 11:41:05 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/05/03 15:52:34 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/05/11 15:06:26 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	main(int argc, char **argv)
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
 	{
-		ft_printf("%s", file_err.no02);
+		perror("Error\n");
 		return (close(fd));
 	}
 
