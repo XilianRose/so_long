@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 11:41:05 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/05/11 15:06:26 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/05/17 15:48:40 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,15 @@ void	allocate_map(t_map_info map)
 	i = 0;
 	arr = ft_calloc(map.rows + 1, sizeof(char *));
 	if (!arr)
-		return (ft_printf("\nERROR\nmalloc failed\n"), NULL);
+		return (perror("Error\n"));
 	while (i <= map.rows)
 	{
 		arr[i] = ft_calloc(map.cols + 1, sizeof(char));
 		if (!arr[i])
-			return (ft_free_map(arr), ft_printf("\nERROR\nmalloc failed\n"), NULL);
+		{
+			ft_free_map(arr);
+			return (perror("Error\n"));
+		}
 		i++;
 	}
 	map.grid = arr;
@@ -54,7 +57,10 @@ void	main(int argc, char **argv)
 {
 	int			fd;
 	t_map_info	map;
+	t_error		file_err;
+	t_error		map_err;
 
+	error_output(file_err, map_err);
 	if (argc != 2)
 		return (ft_printf("%s", file_err.no00));
 	if (ft_strendstr(argv[1], ".ber") == NULL)

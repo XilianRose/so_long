@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:39:27 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/05/10 16:32:07 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/05/17 16:04:34 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 	it first compares the chars in the first and last row at the same time, then
 	it compares the chars in the first and last column at the same time. If, at
 	any time, the char is not '1' it wil return an error message and false. */
-bool	mapwalled_check(t_map_info map)
+bool	mapwalled_check(t_map_info map, t_error map_err)
 {
 	int		i;
 
@@ -26,7 +26,7 @@ bool	mapwalled_check(t_map_info map)
 		if (map.grid[0][i] == '1' && map.grid[map.rows][i] == '1')
 			i++;
 		else
-			return (ft_printf("\nERROR\nmap is not walled\n"), false);
+			return (ft_printf("%s", map_err.no08), false);
 	}
 	i = 0;
 	while (i < map.rows)
@@ -34,14 +34,14 @@ bool	mapwalled_check(t_map_info map)
 		if (map.grid[i][0] == '1' && map.grid[i][map.cols] == '1')
 			i++;
 		else
-			return (ft_printf("\nERROR\nmap is not walled\n"), false);
+			return (ft_printf("%s", map_err.no08), false);
 	}
 	return (true);
 }
 
 /*	this functions checks if the given row contains only valid map components.
 	It returns 'true' if it does and 'false' if it doesn't */
-bool	mapcomponents_check(char *row, t_map_info map)
+bool	mapcomponents_check(char *row, t_map_info map, t_error map_err)
 {
 	int	i;
 
@@ -51,21 +51,21 @@ bool	mapcomponents_check(char *row, t_map_info map)
 		if (ft_strchr("01CEP", row[i]) != NULL)
 		{
 			if (row[i] == '0')
-				map.empty++;
+				map.empty.count++;
 			else if (row[i] == '1')
-				map.wall++;
+				map.wall.count++;
 			else if (row[i] == 'C')
-				map.collect++;
+				map.collect.count++;
 			else if (row[i] == 'E')
-				map.exit++;
+				map.exit.count++;
 			else if (row[i] == 'P')
-				map.player++;
-			if (map.exit > 1 || map.player > 1)
-				return (ft_printf("\nERROR\ntoo many exits or starts\n"), false);
+				map.player.count++;
+			if (map.exit.count > 1 || map.player.count > 1)
+				return (ft_printf("%s", map_err.no05), false);
 			i++;
 		}
 		else
-			return (ft_printf("\nERROR\ncontains invalid components\n"), false);
+			return (ft_printf("%s", map_err.no07), false);
 	}
 	return (true);
 }
@@ -77,7 +77,7 @@ bool	mapcomponents_check(char *row, t_map_info map)
 
 	The row is then put into a function that checks the map components */
 
-void	mapshape_check(int fd, t_map_info map)
+void	mapshape_check(int fd, t_map_info map, t_error map_err)
 {
 	char	*row;
 
@@ -85,21 +85,23 @@ void	mapshape_check(int fd, t_map_info map)
 	map.cols = 0;
 	row = get_next_line(fd);
 	if (row == NULL)
-		return (ft_printf("\nERROR\nmap is empty\n"));
+		return (ft_printf("%s", map_err.no01));
 	map.cols = ft_strlen(row);
 	if (map.cols < 3)
-		return (ft_printf("\nERROR\nmap is too narrow\n"), ft_freestr(row));
+		return (ft_printf("%s", map_err.no02), ft_freestr(row));
 	while (row != NULL)
 	{
-		if (mapcomponents_check(row, map) == false)
+		if (mapcomponents_check(row, map, map_err) == false)
 			break ;
 		if (ft_strlen(row) != map.cols)
-			return (ft_printf("\nERROR\nmap is not a rectangle\n"), ft_freestr(row));
+			return (ft_printf("%s", map_err.no03), ft_freestr(row));
 		ft_freestr(row);
 		map.rows++;
 		row = get_next_line(fd);
 	}
 	if (map.rows < 3)
-		return (ft_printf("\nERROR\nmap is too short\n"), ft_freestr(row));
+		return (ft_printf("%s", map_err.no04), ft_freestr(row));
 	return (ft_freestr(row));
 }
+
+
