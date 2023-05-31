@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 12:46:26 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/05/03 14:56:04 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/05/31 15:51:46 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,25 @@
 # include "libft.h"
 # include "MLX42/include/MLX42/MLX42.h"
 
+// typedef struct s_queue {
+// 	struct s_list	*front;
+// 	struct s_list	*rear;
+// }	t_queue;
+
 typedef struct s_component {
 	int		count;
 	char	*position;
 }	t_component;
 
 typedef struct s_map_info {
-	int			rows;
-	int			cols;
-	char		**grid;
-	t_component	player;
-	t_component	collect;
-	t_component	exit;
-	t_component	wall;
-	t_component	empty;
+	int					rows;
+	int					cols;
+	char				**grid;
+	struct s_component	player;
+	struct s_component	collect;
+	struct s_component	exit;
+	struct s_component	wall;
+	struct s_component	empty;
 }	t_map_info;
 
 typedef struct s_error {

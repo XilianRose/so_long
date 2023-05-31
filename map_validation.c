@@ -6,11 +6,36 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:39:27 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/05/17 16:04:34 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/05/31 16:17:47 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
+
+/*	this funciton checks if the position with coordinates (int x & int y) is
+	valid for the floodfill function. It returns true if the coordinates are in
+	the grid and it's an empty space ('0'), collectible ('C') or an exit ('E') */
+
+bool	valid_position(t_map_info map, int x, int y)
+{
+	if (x < 0 || x > map.cols || y < 0 || y > map.rows
+		|| map.grid[x][y] != ('0' || 'C' || 'E'))
+		return (false);
+	else
+		return (true);
+}
+
+/* flood fill */
+bool	path_check(t_map_info map)
+{
+	t_list	queue;
+	int		x;
+	int		y;
+
+
+}
+
+
 
 /*	this functions checks if the map is surrounded by walls or not.
 	it first compares the chars in the first and last row at the same time, then
@@ -103,5 +128,3 @@ void	mapshape_check(int fd, t_map_info map, t_error map_err)
 		return (ft_printf("%s", map_err.no04), ft_freestr(row));
 	return (ft_freestr(row));
 }
-
-
