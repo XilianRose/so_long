@@ -6,36 +6,70 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:39:27 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/05/31 16:17:47 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/02 16:11:51 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-/*	this funciton checks if the position with coordinates (int x & int y) is
-	valid for the floodfill function. It returns true if the coordinates are in
-	the grid and it's an empty space ('0'), collectible ('C') or an exit ('E') */
+/*	this function checks to see if the path_check function has visited all the
+	destinations. It takes the map struct and 2D bool array with visited
+	positions as arguments. It first checks if the exit has been visited and then
+	it checks the collectibles */
 
-bool	valid_position(t_map_info map, int x, int y)
+static bool	destinations_check(t_map_info map, bool **visited)
 {
+	int	i;
+	int	x;
+	int	y;
+
+	i = 0;
+	x = map.exit.position[i].x;
+	y = map.exit.position[i].y;
+	if (visited[x][y] != true)
+		return (false);
+	while (i <= map.collect.count)
+	{
+		x = map.collect.position[i].x;
+		y = map.collect.position[i].y;
+		if (visited[x][y] != true)
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
+/*	this function checks to see if there's a path between player starting point,
+	all the collectibles and the exit. It takes the map struct, the player
+	starting coordinates and a 2D bool array as arguments. I made it recursively
+	for ease so I had to isolate the destinations check to it's own function.
+
+	So it first checks to see if all the target destinations have been visited. If
+	not, it checks if the position itself is valid and sets it to true if it is. It
+	goes through all the connecting tiles/nodes/positions until it no longer can,
+	which is when it will return false, or until the destination check returns true,
+	which is when it returns true. */
+bool	path_check(t_map_info map, int x, int y, bool **visited)
+{
+	if (destinations_check(map, visited) == true)
+		return (true);
 	if (x < 0 || x > map.cols || y < 0 || y > map.rows
 		|| map.grid[x][y] != ('0' || 'C' || 'E'))
 		return (false);
-	else
+	if (visited[x][y] == true)
+		return (false);
+	visited[x][y] = true;
+	if ((path_check(map, x - 1, y - 1, visited[x][y]) == true) ||
+		(path_check(map, x - 1, y, visited[x][y]) == true) ||
+		(path_check(map, x, y - 1, visited[x][y]) == true) ||
+		(path_check(map, x + 1, y + 1, visited[x][y]) == true) ||
+		(path_check(map, x + 1, y, visited[x][y]) == true) ||
+		(path_check(map, x, y + 1, visited[x][y]) == true) ||
+		(path_check(map, x + 1, y - 1, visited[x][y]) == true) ||
+		(path_check(map, x - 1, y + 1, visited[x][y]) == true))
 		return (true);
+	return (false);
 }
-
-/* flood fill */
-bool	path_check(t_map_info map)
-{
-	t_list	queue;
-	int		x;
-	int		y;
-
-
-}
-
-
 
 /*	this functions checks if the map is surrounded by walls or not.
 	it first compares the chars in the first and last row at the same time, then
@@ -66,7 +100,7 @@ bool	mapwalled_check(t_map_info map, t_error map_err)
 
 /*	this functions checks if the given row contains only valid map components.
 	It returns 'true' if it does and 'false' if it doesn't */
-bool	mapcomponents_check(char *row, t_map_info map, t_error map_err)
+static bool	mapcomponents_check(char *row, t_map_info map, t_error map_err)
 {
 	int	i;
 

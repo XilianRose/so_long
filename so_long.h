@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 12:46:26 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/05/31 15:51:46 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/02 12:59:12 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,14 @@
 // 	struct s_list	*rear;
 // }	t_queue;
 
+typedef struct s_coordinates {
+	int	x;
+	int	y;
+}	t_coordinates;
+
 typedef struct s_component {
-	int		count;
-	char	*position;
+	int						count;
+	struct s_coordinates	position[42];
 }	t_component;
 
 typedef struct s_map_info {
