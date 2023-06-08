@@ -6,11 +6,11 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:40:32 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/05/17 15:42:02 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/08 13:48:41 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "so_long.h"
 
 /*	this function first free's the allocated rows, then the map itself and then
 	set's them to NULL. This is done after checking it can be freed */

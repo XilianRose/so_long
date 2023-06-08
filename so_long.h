@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 12:46:26 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/02 12:59:12 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/08 13:49:36 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <stdio.h>
 # include <math.h>
 # include <stdbool.h>
-# include "libft.h"
+# include "libft/inc/libft.h"
 # include "MLX42/include/MLX42/MLX42.h"
 
 // typedef struct s_queue {

@@ -6,18 +6,18 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:39:27 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/02 16:11:51 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/08 15:50:56 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "so_long.h"
 
 /*	this function checks to see if the path_check function has visited all the
 	destinations. It takes the map struct and 2D bool array with visited
 	positions as arguments. It first checks if the exit has been visited and then
 	it checks the collectibles */
 
-static bool	destinations_check(t_map_info map, bool **visited)
+static bool	destinations_check(t_map_info map, bool visited[map.rows][map.cols])
 {
 	int	i;
 	int	x;
@@ -28,7 +28,7 @@ static bool	destinations_check(t_map_info map, bool **visited)
 	y = map.exit.position[i].y;
 	if (visited[x][y] != true)
 		return (false);
-	while (i <= map.collect.count)
+	while (i < map.collect.count)
 	{
 		x = map.collect.position[i].x;
 		y = map.collect.position[i].y;
@@ -38,6 +38,47 @@ static bool	destinations_check(t_map_info map, bool **visited)
 	}
 	return (true);
 }
+
+/* test main for destinations check
+int	main(void)
+{
+	t_map_info	testmap;
+	bool		visited[5][5];
+	int			i;
+	int			j;
+	bool		res;
+
+	res = false;
+	printf("res = %d\n", res);
+	testmap.exit.count = 1;
+	testmap.exit.position[0].x = 2;
+	testmap.exit.position[0].y = 2;
+	testmap.collect.count = 2;
+	testmap.collect.position[0].x = 3;
+	testmap.collect.position[0].y = 3;
+	testmap.collect.position[1].x = 4;
+	testmap.collect.position[1].y = 4;
+	i = 0;
+	j = 0;
+	printf("visited:\n");
+	while (i < 5)
+	{
+		j = 0;
+		while (j < 5)
+		{
+			visited[i][j] = false;
+			printf("[%d] ", visited[i][j]);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+	printf("check 1\n");
+	res = destinations_check(testmap, visited);
+	printf("check 2\n");
+	printf("res = %d\n", res);
+	return (0);
+} */
 
 /*	this function checks to see if there's a path between player starting point,
 	all the collectibles and the exit. It takes the map struct, the player
@@ -99,7 +140,12 @@ bool	mapwalled_check(t_map_info map, t_error map_err)
 }
 
 /*	this functions checks if the given row contains only valid map components.
-	It returns 'true' if it does and 'false' if it doesn't */
+	It returns 'true' if it does and 'false' if it doesn't
+
+	y = map.rows, x = i (als component gevonden is, opslaan in struct)
+	array [count - 1]
+
+	*/
 static bool	mapcomponents_check(char *row, t_map_info map, t_error map_err)
 {
 	int	i;
@@ -133,6 +179,8 @@ static bool	mapcomponents_check(char *row, t_map_info map, t_error map_err)
 	empty, then it checks if there's at least 3 columns. After that it compares
 	the length of every row to check if it's rectangular and then it checks if
 	there's at least 3 rows.
+
+	Free the strings allocated by GNL
 
 	The row is then put into a function that checks the map components */
 

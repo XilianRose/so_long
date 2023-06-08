@@ -6,11 +6,11 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 11:41:05 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/05/17 15:48:40 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/08 13:48:42 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "so_long.h"
 
 /*	this function allocates the memory for the map. */
 void	allocate_map(t_map_info map)
