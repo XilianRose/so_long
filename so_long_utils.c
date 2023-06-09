@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:40:32 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/08 13:48:41 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/09 14:06:27 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	free_map(char **map)
 	if (map != NULL)
 	{
 		free(map);
-		map == NULL;
+		map = NULL;
 	}
 }
 
