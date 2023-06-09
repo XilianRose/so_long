@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:39:27 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/09 15:49:15 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/09 16:16:22 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ bool	path_check(t_map_info *map, int x, int y, bool **visited)
 	if ((path_check(map, x - 1, y - 1, visited) == true)
 		|| (path_check(map, x - 1, y, visited) == true)
 		|| (path_check(map, x, y - 1, visited) == true)
-		|| (path_check(map, x + 1, y + 1, visited) == true)
+		|| (path_check(map, x + 1, y + 1, visited) == true)g
 		|| (path_check(map, x + 1, y, visited) == true)
 		|| (path_check(map, x, y + 1, visited) == true)
 		|| (path_check(map, x + 1, y - 1, visited) == true)
