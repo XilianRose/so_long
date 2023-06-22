@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:39:27 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/09 16:16:22 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/22 15:27:15 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,12 @@ bool	path_check(t_map_info *map, int x, int y, bool **visited)
 	int j = 0;
 	if (destinations_check(map, visited) == true)
 		return (true);
+	printf("char: %c\n", map->grid[x][y]);
+	// if (x < 0 || x > map->cols || y < 0 || y > map->rows
+	// 	|| map->grid[x][y] != '0' || map->grid[x][y] != 'C'
+	// 	|| map->grid[x][y] != 'E' || map->grid[x][y] != 'P')
 	if (x < 0 || x > map->cols || y < 0 || y > map->rows
-		|| map->grid[x][y] != '0' || map->grid[x][y] != 'C'
-		|| map->grid[x][y] != 'E' || map->grid[x][y] != 'P')
+		|| ft_strchr("0CEP", map->grid[x][y]) == NULL)
 		return (false);
 	if (visited[x][y] == true)
 		return (false);
@@ -67,7 +70,7 @@ bool	path_check(t_map_info *map, int x, int y, bool **visited)
 		j = 0;
 		while (j < map->cols)
 		{
-			printf("[%d] ", map->grid[i][j]);
+			printf("[%d] ", visited[i][j]);
 			j++;
 		}
 		printf("\n");
@@ -76,7 +79,7 @@ bool	path_check(t_map_info *map, int x, int y, bool **visited)
 	if ((path_check(map, x - 1, y - 1, visited) == true)
 		|| (path_check(map, x - 1, y, visited) == true)
 		|| (path_check(map, x, y - 1, visited) == true)
-		|| (path_check(map, x + 1, y + 1, visited) == true)g
+		|| (path_check(map, x + 1, y + 1, visited) == true)
 		|| (path_check(map, x + 1, y, visited) == true)
 		|| (path_check(map, x, y + 1, visited) == true)
 		|| (path_check(map, x + 1, y - 1, visited) == true)
@@ -103,8 +106,8 @@ int	main(void)
 	test.collect.count = 2;
 	test.collect.position[0].x = 3;
 	test.collect.position[0].y = 1;
-	test.collect.position[1].x = 1;
-	test.collect.position[1].y = 3;
+	test.collect.position[1].x = 3;
+	test.collect.position[1].y = 2;
 	visited = calloc(test.rows + 1, sizeof (bool *));
 	if (!visited)
 		return (perror("Error\n"), 0);
@@ -121,7 +124,7 @@ int	main(void)
 	test.grid[0] = "11111";
 	test.grid[1] = "1P0C1";
 	test.grid[2] = "10101";
-	test.grid[3] = "1C0E1";
+	test.grid[3] = "1CCE1";
 	test.grid[4] = "11111";
 	i = 0;
 	while (i < test.rows)
