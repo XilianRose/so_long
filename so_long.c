@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 11:41:05 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/09 15:39:44 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/23 11:14:49 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,19 @@ void	allocate_map(t_map_info *map)
 	return ;
 }
 
-// /*	this function copies the map from the file to the allocated memory */
-// void	save_map(int fd, t_map_info map)
-// {
-// 	int	i;
+/*	this function copies the map from the file to the allocated memory */
+void	save_map(int fd, t_map_info map)
+{
+	int	i;
 
-// 	i = 0;
-// 	while (i <= map.rows)
-// 	{
-// 		map.grid[i] = get_next_line(fd);
-// 		i++;
-// 	}
-// 	return ;
-// }
+	i = 0;
+	while (i <= map.rows)
+	{
+		map.grid[i] = get_next_line(fd);
+		i++;
+	}
+	return ;
+}
 
 // /*	the main checks if there's a ".ber" file given as input and opens it if
 // 	possible it then calls on the function to read the map */
