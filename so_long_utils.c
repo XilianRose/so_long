@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:40:32 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/23 11:24:54 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/23 12:24:07 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,17 @@ void	free_map(char **map)
 	}
 }
 
-void	error_output(t_error *file_err, t_error *map_err)
+void	error_output(t_error *errme)
 {
-	file_err->no00 = "Error\nplease give one filename as argument\n";
-	file_err->no01 = "Error\nnot a '->ber' map description file\n";
-	file_err->no02 = "Error\nencountered problem while opening the file\n";
-	map_err->no00 = "";
-	map_err->no01 = "Error\nmap is empty\n";
-	map_err->no02 = "Error\nmap is too narrow\n";
-	map_err->no03 = "Error\nmap is not a rectangle\n";
-	map_err->no04 = "Error\nmap is too short\n";
-	map_err->no05 = "Error\nmap has more than 1 exit or starting position\n";
-	map_err->no06 = "";
-	map_err->no07 = "Error\nmap contains invalid map components\n";
-	map_err->no08 = "Error\nmap is not completely walled\n";
+	errme->file0 = "Error\nplease give one filename as argument\n";
+	errme->file1 = "Error\nnot a '->ber' map description file\n";
+	errme->file2 = "Error\nencountered problem while opening the file\n";
+	errme->map0 = "Error\nmap is empty\n";
+	errme->map1 = "Error\nmap is too narrow\n";
+	errme->map2 = "Error\nmap is not a rectangle\n";
+	errme->map3 = "Error\nmap is too short\n";
+	errme->map4 = "Error\nmap has more than 1 exit or starting position\n";
+	errme->map5 = "Error\nmap contains invalid map components\n";
+	errme->map6 = "Error\nmap is not completely walled\n";
 	return ;
 }

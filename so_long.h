@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 12:46:26 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/23 11:25:48 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/23 12:24:49 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,36 +49,26 @@ typedef struct s_map_info {
 }	t_map_info;
 
 typedef struct s_error {
-	char	*no00;
-	char	*no01;
-	char	*no02;
-	char	*no03;
-	char	*no04;
-	char	*no05;
-	char	*no06;
-	char	*no07;
-	char	*no08;
-	char	*no09;
-	char	*no10;
-	char	*no11;
-	char	*no12;
-	char	*no13;
-	char	*no14;
-	char	*no15;
-	char	*no16;
-	char	*no17;
-	char	*no18;
-	char	*no19;
-	char	*no20;
-	char	*no21;
-	char	*no22;
-	char	*no23;
-	char	*no24;
-	char	*no25;
+	char	*file0;
+	char	*file1;
+	char	*file2;
+	char	*file3;
+	char	*file4;
+	char	*map0;
+	char	*map1;
+	char	*map2;
+	char	*map3;
+	char	*map4;
+	char	*map5;
+	char	*map6;
+	char	*map7;
+	char	*map8;
+	char	*map9;
+
 }	t_error;
 
 void	free_map(char **map);
 void	allocate_map(t_map_info *map);
-void	error_output(t_error *file_err, t_error *map_err);
+void	error_output(t_error *errme);
 
 #endif

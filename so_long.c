@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 11:41:05 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/23 11:14:49 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/23 12:23:45 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,13 @@ void	save_map(int fd, t_map_info map)
 // {
 // 	int			fd;
 // 	t_map_info	map;
-// 	t_error		file_err;
-// 	t_error		map_err;
+// 	t_error		errme;
 
-// 	error_output(file_err, map_err);
+// 	error_output(&errme);
 // 	if (argc != 2)
-// 		return (ft_printf("%s", file_err.no00));
+// 		return (ft_printf("%s", errme.file0));
 // 	if (ft_strendstr(argv[1], ".ber") == NULL)
-// 		return (ft_printf("%s", file_err.no01));
+// 		return (ft_printf("%s", errme.file1));
 // 	fd = open(argv[1], O_RDONLY);
 // 	if (fd < 0)
 // 	{

@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:39:27 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/23 11:54:11 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/23 12:23:52 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@
 // 	it first compares the chars in the first and last row at the same time, then
 // 	it compares the chars in the first and last column at the same time. If, at
 // 	any time, the char is not '1' it wil return an error message and false. */
-// bool	mapwalled_check(t_map_info *map, t_error *map_err)
+// bool	mapwalled_check(t_map_info *map, t_error *errme)
 // {
 // 	int		i;
 
@@ -85,7 +85,7 @@
 // 		if (map->grid[0][i] == '1' && map->grid[map->rows - 1][i] == '1')
 // 			i++;
 // 		else
-// 			return (ft_printf("%s", map_err->no08), false);
+// 			return (ft_printf("%s", errme->map6), false);
 // 	}
 // 	i = 0;
 // 	while (i < map->rows)
@@ -93,7 +93,7 @@
 // 		if (map->grid[i][0] == '1' && map->grid[i][map->cols - 1] == '1')
 // 			i++;
 // 		else
-// 			return (ft_printf("%s", map_err->no08), false);
+// 			return (ft_printf("%s", errme->map6), false);
 // 	}
 // 	return (true);
 // }
@@ -105,7 +105,7 @@
 	array [count - 1]
 
 */
-static bool	mapcomponents_check(char *row, t_map_info *map, t_error *map_err)
+static bool	mapcomponents_check(char *row, t_map_info *map, t_error *errme)
 {
 	int	i;
 
@@ -125,11 +125,11 @@ static bool	mapcomponents_check(char *row, t_map_info *map, t_error *map_err)
 			else if (row[i] == 'P')
 				map->player.count++;
 			if (map->exit.count > 1 || map->player.count > 1)
-				return (ft_printf("%s", map_err->no05), false);
+				return (ft_printf("%s", errme->map4), false);
 			i++;
 		}
 		else
-			return (ft_printf("%s", map_err->no07), false);
+			return (ft_printf("%s", errme->map5), false);
 	}
 	return (true);
 }
@@ -143,29 +143,55 @@ static bool	mapcomponents_check(char *row, t_map_info *map, t_error *map_err)
 
 	The row is then put into a function that checks the map components */
 
-void	mapshape_check(int fd, t_map_info map, t_error map_err)
+void	mapshape_check(int fd, t_map_info *map, t_error *errme)
 {
 	char	*row;
 
-	map.rows = 0;
-	map.cols = 0;
+	map->rows = 0;
+	map->cols = 0;
 	row = get_next_line(fd);
 	if (row == NULL)
-		return (ft_printf("%s", map_err.no01));
-	map.cols = ft_strlen(row);
-	if (map.cols < 3)
-		return (ft_printf("%s", map_err.no02), ft_freestr(row));
+		return (ft_printf("%s", errme->map0));
+	map->cols = ft_strlen(row);
+	if (map->cols < 3)
+		return (ft_printf("%s", errme->map1), ft_freestr(row));
 	while (row != NULL)
 	{
-		if (mapcomponents_check(row, map, map_err) == false)
+		if (mapcomponents_check(row, &map, &errme) == false)
 			break ;
-		if (ft_strlen(row) != map.cols)
-			return (ft_printf("%s", map_err.no03), ft_freestr(row));
+		if (ft_strlen(row) != map->cols)
+			return (ft_printf("%s", errme->map2), ft_freestr(row));
 		ft_freestr(row);
-		map.rows++;
+		map->rows++;
 		row = get_next_line(fd);
 	}
-	if (map.rows < 3)
-		return (ft_printf("%s", map_err.no04), ft_freestr(row));
+	if (map->rows < 3)
+		return (ft_printf("%s", errme->map3), ft_freestr(row));
 	return (ft_freestr(row));
+}
+
+void	main(int argc, char **argv)
+{
+	int			fd;
+	t_map_info	test;
+	t_error		errme;
+
+	error_output(&errme);
+	if (argc != 2)
+		return (ft_printf("%s", errme.file0));
+	if (ft_strendstr(argv[1], ".ber") == NULL)
+		return (ft_printf("%s", errme.file1));
+	fd = open(argv[1], O_RDONLY);
+	if (fd < 0)
+	{
+		perror("Error\n");
+		return (close(fd));
+	}
+
+/* map validation */
+/* map saving */
+/* window handling */
+
+	close(fd);
+	return ;
 }

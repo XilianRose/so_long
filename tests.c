@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/09 14:12:24 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/23 11:53:13 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/23 12:18:16 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,8 +169,7 @@ int	main(void)
 	int			i;
 	int			j;
 	bool		res;
-	t_error		file_err;
-	t_error		map_err;
+	t_error		errme;
 
 	test.cols = 5;
 	test.rows = 5;
@@ -192,8 +191,8 @@ int	main(void)
 		printf("\n");
 		i++;
 	}
-	error_output(&file_err, &map_err);
-	res = mapwalled_check(&test, &map_err);
+	error_output(&errme);
+	res = mapwalled_check(&test, &errme);
 	printf("Result: %i\n", res);
 	return (0);
 }
@@ -205,8 +204,7 @@ int	main(void)
 	int			i;
 	int			j;
 	bool		res;
-	t_error		file_err;
-	t_error		map_err;
+	t_error		errme;
 
 	test.cols = 5;
 	test.rows = 5;
@@ -223,8 +221,8 @@ int	main(void)
 		printf("[%c] ", test.grid[i][j]);
 		j++;
 	}
-	error_output(&file_err, &map_err);
-	res = mapcomponents_check(test.grid[i], &test, &map_err);
+	error_output(&errme);
+	res = mapcomponents_check(test.grid[i], &test, &errme);
 	printf("\nResult: %i\n", res);
 	return (0);
 }
