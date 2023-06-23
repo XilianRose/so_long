@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/09 14:12:24 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/23 13:25:53 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/23 16:03:46 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,6 +224,28 @@ int	main(void)
 	error_message(&errme);
 	res = mapcomponents_check(test.grid[i], &test, &errme);
 	printf("\nResult: %i\n", res);
+	return (0);
+}
+
+//													main for testing mapshape check
+int	main(int argc, char **argv)
+{
+	int			fd;
+	t_map_info	test;
+	t_error		errme;
+	bool		res;
+
+	error_message(&errme);
+	if (argc != 2)
+		return (ft_printf("%s", errme.file0), 0);
+	if (my_strendstr(argv[1], ".ber") == NULL)
+		return (ft_printf("%s", errme.file1), 0);
+	fd = open(argv[1], O_RDONLY);
+	if (fd < 0)
+		return (perror("Error\n"), close(fd), 0);
+	res = mapshape_check(fd, &test, &errme);
+
+	close(fd);
 	return (0);
 }
 */

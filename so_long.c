@@ -6,14 +6,14 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 11:41:05 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/23 13:25:50 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/23 16:23:37 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
 /*	this function allocates the memory for the map. */
-void	allocate_map(t_map_info *map)
+char	*allocate_map(t_map_info *map)
 {
 	char	**arr;
 	int		i;
@@ -21,32 +21,40 @@ void	allocate_map(t_map_info *map)
 	i = 0;
 	arr = calloc(map->rows + 1, sizeof(char *));
 	if (!arr)
-		return (perror("Error\n"));
-	while (i <= map->rows)
+		return (perror("Error\n"), NULL);
+	while (i <= map->rows + 1)
 	{
 		arr[i] = calloc(map->cols + 1, sizeof(char));
 		if (!arr[i])
 		{
 			free_map(arr);
-			return (perror("Error\n"));
+			return (perror("Error\n"), NULL);
 		}
 		i++;
 	}
 	map->grid = arr;
-	return ;
+	return (arr[0]);
 }
 
 /*	this function copies the map from the file to the allocated memory */
-void	save_map(int fd, t_map_info map)
+void	save_map(int fd, t_map_info *map)
 {
-	int	i;
+	int		i;
+	char	*row;
 
 	i = 0;
-	while (i <= map.rows)
+	row = NULL;
+	while (i < map->rows)
 	{
-		map.grid[i] = get_next_line(fd);
+		row = get_next_line(fd);
+		if (row != NULL)
+			map->grid[i] = row;
+		else
+			break ;
+		my_freestr(&row);
 		i++;
 	}
+	my_freestr(&row);
 	return ;
 }
 
