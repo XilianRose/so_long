@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:39:27 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/23 12:23:52 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/23 14:50:43 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,9 @@
 // /*	this functions checks if the map is surrounded by walls or not.
 // 	it first compares the chars in the first and last row at the same time, then
 // 	it compares the chars in the first and last column at the same time. If, at
-// 	any time, the char is not '1' it wil return an error message and false. */
+// 	any time, the char is not '1' it wil return an error message and false.
+
+// wss rows - 1 if statement veranderen naar gewoon rows of cols - 1 naar cols - 2 */
 // bool	mapwalled_check(t_map_info *map, t_error *errme)
 // {
 // 	int		i;
@@ -110,7 +112,7 @@ static bool	mapcomponents_check(char *row, t_map_info *map, t_error *errme)
 	int	i;
 
 	i = 0;
-	while (i <= map->cols)
+	while (i < map->cols - 1)
 	{
 		if (ft_strchr("01CEP", row[i]) != NULL)
 		{
@@ -143,55 +145,54 @@ static bool	mapcomponents_check(char *row, t_map_info *map, t_error *errme)
 
 	The row is then put into a function that checks the map components */
 
-void	mapshape_check(int fd, t_map_info *map, t_error *errme)
+bool	mapshape_check(int fd, t_map_info *map, t_error *errme)
 {
 	char	*row;
+	int		len;
 
 	map->rows = 0;
 	map->cols = 0;
 	row = get_next_line(fd);
 	if (row == NULL)
-		return (ft_printf("%s", errme->map0));
-	map->cols = ft_strlen(row);
+		return (ft_printf("%s", errme->map0), false);
+	map->cols = ft_strlen(row) - 1;
 	if (map->cols < 3)
-		return (ft_printf("%s", errme->map1), ft_freestr(row));
+		return (ft_printf("%s", errme->map1), my_freestr(row), false);
 	while (row != NULL)
 	{
-		if (mapcomponents_check(row, &map, &errme) == false)
+		if (mapcomponents_check(row, map, errme) == false)
 			break ;
-		if (ft_strlen(row) != map->cols)
-			return (ft_printf("%s", errme->map2), ft_freestr(row));
-		ft_freestr(row);
+		if ((int) ft_strlen(row) - 1 != map->cols)
+			return (ft_printf("%s", errme->map2), my_freestr(row), false);
+		my_freestr(row);
 		map->rows++;
 		row = get_next_line(fd);
 	}
 	if (map->rows < 3)
-		return (ft_printf("%s", errme->map3), ft_freestr(row));
-	return (ft_freestr(row));
+		return (ft_printf("%s", errme->map3), my_freestr(row), false);
+	return (my_freestr(row), true);
 }
 
-void	main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	int			fd;
 	t_map_info	test;
 	t_error		errme;
+	bool		res;
 
-	error_output(&errme);
+	error_message(&errme);
 	if (argc != 2)
-		return (ft_printf("%s", errme.file0));
-	if (ft_strendstr(argv[1], ".ber") == NULL)
-		return (ft_printf("%s", errme.file1));
+		return (ft_printf("%s", errme.file0), 0);
+	if (my_strendstr(argv[1], ".ber") == NULL)
+		return (ft_printf("%s", errme.file1), 0);
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
-	{
-		perror("Error\n");
-		return (close(fd));
-	}
-
+		return (perror("Error\n"), close(fd), 0);
 /* map validation */
+	res = mapshape_check(fd, &test, &errme);
 /* map saving */
 /* window handling */
 
 	close(fd);
-	return ;
+	return (0);
 }

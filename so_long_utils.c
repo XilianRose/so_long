@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:40:32 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/23 12:24:07 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/23 13:37:42 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	free_map(char **map)
 	}
 }
 
-void	error_output(t_error *errme)
+void	error_message(t_error *errme)
 {
 	errme->file0 = "Error\nplease give one filename as argument\n";
 	errme->file1 = "Error\nnot a '->ber' map description file\n";

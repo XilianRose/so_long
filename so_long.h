@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 12:46:26 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/23 12:24:49 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/23 13:26:13 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,6 @@ typedef struct s_error {
 
 void	free_map(char **map);
 void	allocate_map(t_map_info *map);
-void	error_output(t_error *errme);
+void	error_message(t_error *errme);
 
 #endif
