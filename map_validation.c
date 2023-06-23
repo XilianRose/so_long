@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:39:27 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/23 11:32:04 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/23 11:54:11 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,32 +71,32 @@
 // 	return (false);
 // }
 
-/*	this functions checks if the map is surrounded by walls or not.
-	it first compares the chars in the first and last row at the same time, then
-	it compares the chars in the first and last column at the same time. If, at
-	any time, the char is not '1' it wil return an error message and false. */
-bool	mapwalled_check(t_map_info *map, t_error *map_err)
-{
-	int		i;
+// /*	this functions checks if the map is surrounded by walls or not.
+// 	it first compares the chars in the first and last row at the same time, then
+// 	it compares the chars in the first and last column at the same time. If, at
+// 	any time, the char is not '1' it wil return an error message and false. */
+// bool	mapwalled_check(t_map_info *map, t_error *map_err)
+// {
+// 	int		i;
 
-	i = 0;
-	while (i < map->cols)
-	{
-		if (map->grid[0][i] == '1' && map->grid[map->rows - 1][i] == '1')
-			i++;
-		else
-			return (ft_printf("%s", map_err->no08), false);
-	}
-	i = 0;
-	while (i < map->rows)
-	{
-		if (map->grid[i][0] == '1' && map->grid[i][map->cols - 1] == '1')
-			i++;
-		else
-			return (ft_printf("%s", map_err->no08), false);
-	}
-	return (true);
-}
+// 	i = 0;
+// 	while (i < map->cols)
+// 	{
+// 		if (map->grid[0][i] == '1' && map->grid[map->rows - 1][i] == '1')
+// 			i++;
+// 		else
+// 			return (ft_printf("%s", map_err->no08), false);
+// 	}
+// 	i = 0;
+// 	while (i < map->rows)
+// 	{
+// 		if (map->grid[i][0] == '1' && map->grid[i][map->cols - 1] == '1')
+// 			i++;
+// 		else
+// 			return (ft_printf("%s", map_err->no08), false);
+// 	}
+// 	return (true);
+// }
 
 /*	this functions checks if the given row contains only valid map components.
 	It returns 'true' if it does and 'false' if it doesn't
@@ -104,32 +104,32 @@ bool	mapwalled_check(t_map_info *map, t_error *map_err)
 	y = map.rows, x = i (als component gevonden is, opslaan in struct)
 	array [count - 1]
 
-	*/
-static bool	mapcomponents_check(char *row, t_map_info map, t_error map_err)
+*/
+static bool	mapcomponents_check(char *row, t_map_info *map, t_error *map_err)
 {
 	int	i;
 
 	i = 0;
-	while (i <= map.cols)
+	while (i <= map->cols)
 	{
 		if (ft_strchr("01CEP", row[i]) != NULL)
 		{
 			if (row[i] == '0')
-				map.empty.count++;
+				map->empty.count++;
 			else if (row[i] == '1')
-				map.wall.count++;
+				map->wall.count++;
 			else if (row[i] == 'C')
-				map.collect.count++;
+				map->collect.count++;
 			else if (row[i] == 'E')
-				map.exit.count++;
+				map->exit.count++;
 			else if (row[i] == 'P')
-				map.player.count++;
-			if (map.exit.count > 1 || map.player.count > 1)
-				return (ft_printf("%s", map_err.no05), false);
+				map->player.count++;
+			if (map->exit.count > 1 || map->player.count > 1)
+				return (ft_printf("%s", map_err->no05), false);
 			i++;
 		}
 		else
-			return (ft_printf("%s", map_err.no07), false);
+			return (ft_printf("%s", map_err->no07), false);
 	}
 	return (true);
 }

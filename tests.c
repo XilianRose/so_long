@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/09 14:12:24 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/23 11:31:37 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/23 11:53:13 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ int	main(void)
 	return (0);
 }
 
-// 														test main for map walled check
+// 															test main for map walled check
 int	main(void)
 {
 	t_map_info	test;
@@ -194,6 +194,38 @@ int	main(void)
 	}
 	error_output(&file_err, &map_err);
 	res = mapwalled_check(&test, &map_err);
+	printf("Result: %i\n", res);
+	return (0);
+}
+
+//													test main for map components check
+int	main(void)
+{
+	t_map_info	test;
+	int			i;
+	int			j;
+	bool		res;
+	t_error		file_err;
+	t_error		map_err;
+
+	test.cols = 5;
+	test.rows = 5;
+	allocate_map(&test);
+	test.grid[0] = "11111";
+	test.grid[1] = "1P0C0";
+	test.grid[2] = "10101";
+	test.grid[3] = "1CEE1";
+	test.grid[4] = "11111";
+	i = 3;
+	j = 0;
+	while (j < test.cols)
+	{
+		printf("[%c] ", test.grid[i][j]);
+		j++;
+	}
+	error_output(&file_err, &map_err);
+	res = mapcomponents_check(test.grid[i], &test, &map_err);
+	printf("\nResult: %i\n", res);
 	return (0);
 }
 */
