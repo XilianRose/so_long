@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 12:46:26 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/23 15:15:54 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/25 14:27:19 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,10 @@ void	free_map(char **map);
 void	save_map(int fd, t_map_info *map);
 char	*allocate_map(t_map_info *map);
 void	error_message(t_error *errme);
+void	mapcomponents_save(t_map_info *map, int x, int y, char c);
+
+bool	mapshape_check(int fd, t_map_info *map, t_error *errme);
+bool	mapwalled_check(t_map_info *map, t_error *errme);
+bool	path_check(t_map_info *map, int x, int y, bool **visited);
 
 #endif
