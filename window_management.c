@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/25 15:41:22 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/26 15:33:56 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/26 16:27:26 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,43 @@
 
 static mlx_image_t	*img;
 
-void	ft_hook(void *param)
+void	keyhook(mlx_key_data_t keydata, void *param)
 {
-	mlx_t	*mlx;
+	mlx_t *mlx;
 
 	mlx = param;
-	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
+	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		mlx_close_window(mlx);
-	if (mlx_is_key_down(mlx, MLX_KEY_UP) || mlx_is_key_down(mlx, MLX_KEY_W))
-		img->instances[0].y -= 3;
-	if (mlx_is_key_down(mlx, MLX_KEY_DOWN) || mlx_is_key_down(mlx, MLX_KEY_S))
-		img->instances[0].y += 3;
-	if (mlx_is_key_down(mlx, MLX_KEY_LEFT) || mlx_is_key_down(mlx, MLX_KEY_A))
-		img->instances[0].x -= 3;
-	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT) || mlx_is_key_down(mlx, MLX_KEY_D))
-		img->instances[0].x += 3;
+	if (((keydata.key == MLX_KEY_UP) || (keydata.key == MLX_KEY_W))
+		&& (keydata.action == MLX_RELEASE))
+		img->instances[0].y -= 32;
+	if (((keydata.key == MLX_KEY_DOWN) || (keydata.key == MLX_KEY_S))
+		&& (keydata.action == MLX_RELEASE))
+		img->instances[0].y += 32;
+	if (((keydata.key == MLX_KEY_LEFT) || (keydata.key == MLX_KEY_A))
+		&& (keydata.action == MLX_RELEASE))
+		img->instances[0].x -= 32;
+	if (((keydata.key == MLX_KEY_RIGHT) || (keydata.key == MLX_KEY_D))
+		&& (keydata.action == MLX_RELEASE))
+		img->instances[0].x += 32;
 }
+
+// void	ft_hook(void *param)
+// {
+// 	mlx_t	*mlx;
+
+// 	mlx = param;
+// 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
+// 		mlx_close_window(mlx);
+// 	if (mlx_is_key_down(mlx, MLX_KEY_UP) || mlx_is_key_down(mlx, MLX_KEY_W))
+// 		img->instances[0].y -= 3;
+// 	if (mlx_is_key_down(mlx, MLX_KEY_DOWN) || mlx_is_key_down(mlx, MLX_KEY_S))
+// 		img->instances[0].y += 3;
+// 	if (mlx_is_key_down(mlx, MLX_KEY_LEFT) || mlx_is_key_down(mlx, MLX_KEY_A))
+// 		img->instances[0].x -= 3;
+// 	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT) || mlx_is_key_down(mlx, MLX_KEY_D))
+// 		img->instances[0].x += 3;
+// }
 
 int32_t	main(int32_t argc, const char *argv[])
 {
@@ -58,7 +79,7 @@ int32_t	main(int32_t argc, const char *argv[])
 		ft_putstr_fd((char *) mlx_strerror(mlx_errno), 2);
 		return (EXIT_FAILURE);
 	}
-	mlx_loop_hook(mlx, ft_hook, mlx);
+	mlx_key_hook(mlx, &keyhook, mlx);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
 	return (EXIT_SUCCESS);
