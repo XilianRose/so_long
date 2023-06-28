@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/25 15:41:22 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/26 16:27:26 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/28 12:37:00 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int32_t	main(int32_t argc, const char *argv[])
 	if (!mlx)
 	{
 		ft_putstr_fd((char *) mlx_strerror(mlx_errno), 2);
-		return (EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
 	img = mlx_new_image(mlx, 32, 32);
 	if (!img)

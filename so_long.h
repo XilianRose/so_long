@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 12:46:26 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/25 14:27:19 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/28 12:47:30 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,12 @@ typedef struct s_map_info {
 	struct s_component	wall;
 	struct s_component	empty;
 }	t_map_info;
+
+typedef struct s_file_info {
+	int					argc;
+	char				**argv;
+	int					fd;
+}	t_file_info;
 
 typedef struct s_error {
 	char	*file0;
