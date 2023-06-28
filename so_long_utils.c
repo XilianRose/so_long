@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:40:32 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/28 13:38:33 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/28 15:16:59 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*	this function gets the x and y position from the mapcomponents_check function
 	(the current position) and saves it to the corresponding map components in the
 	map struct, indicated by the character at the current position. */
-void	mapcomponents_save(t_map_info *map, int x, int y, char c)
+void	save_mapcomponents(t_map_info *map, int x, int y, char c)
 {
 	int	i;
 

@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 12:46:26 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/28 12:47:30 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/28 15:28:50 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,12 @@ typedef struct s_error {
 
 }	t_error;
 
-void	free_map(char **map);
-void	save_map(int fd, t_map_info *map);
-char	*allocate_map(t_map_info *map);
 void	error_message(t_error *errme);
-void	mapcomponents_save(t_map_info *map, int x, int y, char c);
+void	save_map(int fd, t_map_info *map);
+void	save_mapcomponents(t_map_info *map, int x, int y, char c);
 
-bool	mapshape_check(int fd, t_map_info *map, t_error *errme);
-bool	mapwalled_check(t_map_info *map, t_error *errme);
-bool	path_check(t_map_info *map, int x, int y, bool **visited);
+bool	check_mapshape(int fd, t_map_info *map, t_error *errme);
+bool	check_mapwalls(t_map_info *map, t_error *errme);
+bool	check_path(t_map_info *map, int x, int y, bool **visited);
 
 #endif

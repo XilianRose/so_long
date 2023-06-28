@@ -6,19 +6,19 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:39:27 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/25 14:20:41 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/28 15:28:41 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-/*	this function checks to see if the path_check function has visited all the
+/*	this function checks to see if the check_path function has visited all the
 	destinations, i.e. all the collectibles. It takes the map struct and 2D bool
 	array with visited positions as arguments. It first checks if the exit has
 	been visited and then it checks the collectibles
 
 	It only returns true when all the destinations have been visited */
-static bool	destinations_check(t_map_info *map, bool **visited)
+static bool	check_destinations(t_map_info *map, bool **visited)
 {
 	int	i;
 	int	x;
@@ -50,9 +50,9 @@ static bool	destinations_check(t_map_info *map, bool **visited)
 	goes through all the connecting tiles/nodes/positions until it no longer can,
 	which is when it will return false, or until the destination check returns true,
 	which is when it returns true. */
-bool	path_check(t_map_info *map, int x, int y, bool **visited)
+bool	check_path(t_map_info *map, int x, int y, bool **visited)
 {
-	if (destinations_check(map, visited) == true)
+	if (check_destinations(map, visited) == true)
 		return (true);
 	if (x < 0 || x > map->cols || y < 0 || y > map->rows
 		|| ft_strchr("0CEP", map->grid[x][y]) == NULL)
@@ -60,14 +60,14 @@ bool	path_check(t_map_info *map, int x, int y, bool **visited)
 	if (visited[x][y] == true)
 		return (false);
 	visited[x][y] = true;
-	if ((path_check(map, x - 1, y - 1, visited) == true)
-		|| (path_check(map, x - 1, y, visited) == true)
-		|| (path_check(map, x, y - 1, visited) == true)
-		|| (path_check(map, x + 1, y + 1, visited) == true)
-		|| (path_check(map, x + 1, y, visited) == true)
-		|| (path_check(map, x, y + 1, visited) == true)
-		|| (path_check(map, x + 1, y - 1, visited) == true)
-		|| (path_check(map, x - 1, y + 1, visited) == true))
+	if ((check_path(map, x - 1, y - 1, visited) == true)
+		|| (check_path(map, x - 1, y, visited) == true)
+		|| (check_path(map, x, y - 1, visited) == true)
+		|| (check_path(map, x + 1, y + 1, visited) == true)
+		|| (check_path(map, x + 1, y, visited) == true)
+		|| (check_path(map, x, y + 1, visited) == true)
+		|| (check_path(map, x + 1, y - 1, visited) == true)
+		|| (check_path(map, x - 1, y + 1, visited) == true))
 		return (true);
 	return (false);
 }
@@ -76,7 +76,7 @@ bool	path_check(t_map_info *map, int x, int y, bool **visited)
 	it first compares the chars in the first and last row at the same time, then
 	it compares the chars in the first and last column at the same time. If, at
 	any time, the char is not '1' it wil return an error message and false. */
-bool	mapwalled_check(t_map_info *map, t_error *errme)
+bool	check_mapwalls(t_map_info *map, t_error *errme)
 {
 	int		i;
 
@@ -109,7 +109,7 @@ bool	mapwalled_check(t_map_info *map, t_error *errme)
 
 	If the map consists of only the correct components and not more than 1
 	exit or starting position it's return true */
-static bool	mapcomponents_check(char *row, t_map_info *map, t_error *errme)
+static bool	check_mapcomponents(char *row, t_map_info *map, t_error *errme)
 {
 	int	i;
 
@@ -127,7 +127,7 @@ static bool	mapcomponents_check(char *row, t_map_info *map, t_error *errme)
 			if (map->exit.count > 1 || map->player.count > 1)
 				return (ft_printf("%s", errme->map4), false);
 			if (ft_strchr("CEP", row[i]) != NULL)
-				mapcomponents_save(map, i, map->rows, row[i]);
+				save_mapcomponents(map, i, map->rows, row[i]);
 			i++;
 		}
 		else
@@ -144,7 +144,7 @@ static bool	mapcomponents_check(char *row, t_map_info *map, t_error *errme)
 	Free the strings allocated by GNL
 
 	The row is then put into a function that checks the map components */
-bool	mapshape_check(int fd, t_map_info *map, t_error *errme)
+bool	check_mapshape(int fd, t_map_info *map, t_error *errme)
 {
 	char	*row;
 
@@ -158,7 +158,7 @@ bool	mapshape_check(int fd, t_map_info *map, t_error *errme)
 		return (ft_printf("%s", errme->map1), my_freestr(&row), false);
 	while (row != NULL)
 	{
-		if (mapcomponents_check(row, map, errme) == false)
+		if (check_mapcomponents(row, map, errme) == false)
 			break ;
 		if ((int) ft_strlen(row) - 1 != map->cols)
 			return (ft_printf("%s", errme->map2), my_freestr(&row), false);
