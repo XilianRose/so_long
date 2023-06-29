@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 12:46:26 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/28 15:28:50 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/29 12:28:29 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,11 @@
 # include "libft/inc/libft.h"
 # include "MLX42/include/MLX42/MLX42.h"
 
-// typedef struct s_queue {
-// 	struct s_list	*front;
-// 	struct s_list	*rear;
-// }	t_queue;
-
 typedef struct s_coordinates {
 	int	x;
 	int	y;
 }	t_coordinates;
+
 
 typedef struct s_component {
 	int						count;
@@ -73,6 +69,17 @@ typedef struct s_error {
 
 }	t_error;
 
+typedef struct s_dimensions {
+	int	width;
+	int	height;
+}	t_dimensions;
+
+typedef struct s_game_info {
+	int					tilesize;
+	struct s_dimensions	window;
+
+}	t_game_info;
+
 void	error_message(t_error *errme);
 void	save_map(int fd, t_map_info *map);
 void	save_mapcomponents(t_map_info *map, int x, int y, char c);
@@ -80,5 +87,6 @@ void	save_mapcomponents(t_map_info *map, int x, int y, char c);
 bool	check_mapshape(int fd, t_map_info *map, t_error *errme);
 bool	check_mapwalls(t_map_info *map, t_error *errme);
 bool	check_path(t_map_info *map, int x, int y, bool **visited);
+int		start(t_map_info *map);
 
 #endif

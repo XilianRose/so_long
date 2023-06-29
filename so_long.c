@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 11:41:05 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/28 15:46:13 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/29 12:12:34 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,17 @@ bool	map_validation(t_file_info *file, t_map_info *map, t_error *errme)
 	visited = NULL;
 	if (check_mapshape(file->fd, map, errme) == false)
 		return (false);
-	visited = (bool **)my_allocarray((char **)visited, map->cols, map->rows);
-	if (!visited)
-		return (perror("Error\n"), close(file->fd), false);
 	close(file->fd);
 	file->fd = open(file->argv[1], O_RDONLY);
-	if (my_allocarray(map->grid, map->cols, map->rows) == NULL)
+	map->grid = my_allocarray(map->grid, map->cols, map->rows);
+	if (!map->grid)
 		return (perror("Error\n"), close(file->fd), false);
 	save_map(file->fd, map);
 	if (check_mapwalls(map, errme) == false)
 		return (false);
+	visited = (bool **)my_allocarray((char **)visited, map->cols, map->rows);
+	if (!visited)
+		return (perror("Error\n"), close(file->fd), false);
 	check_path(map, map->player.position[0].x,
 		map->player.position[0].y, visited);
 	return (true);
@@ -63,5 +64,7 @@ int	main(int argc, char **argv)
 	if (map_validation(&file, &map, &errme) == false)
 		return (0);
 	close(file.fd);
+	if (start(&map) == EXIT_SUCCESS)
+		return (1);
 	return (0);
 }

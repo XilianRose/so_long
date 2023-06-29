@@ -6,16 +6,16 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/25 15:41:22 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/28 12:37:00 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/29 16:13:04 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-#define WIDTH 512
-#define HEIGHT 512
-
 static mlx_image_t	*img;
+
+
+
 
 void	keyhook(mlx_key_data_t keydata, void *param)
 {
@@ -55,25 +55,34 @@ void	keyhook(mlx_key_data_t keydata, void *param)
 // 		img->instances[0].x += 3;
 // }
 
-int32_t	main(int32_t argc, const char *argv[])
+int	start(t_map_info *map)
 {
-	mlx_t		*mlx;
+	mlx_t			*mlx;
+	mlx_texture_t	*texture;
 
-	mlx = mlx_init(WIDTH, HEIGHT, "Lucky Cat", true);
+	mlx = mlx_init(map->cols * 32, map->rows * 32, "Lucky Cat", true);
 	if (!mlx)
 	{
 		ft_putstr_fd((char *) mlx_strerror(mlx_errno), 2);
 		exit(EXIT_FAILURE);
 	}
-	img = mlx_new_image(mlx, 32, 32);
+	texture = mlx_load_png("images/cat_up.png");
+	if (!texture)
+	{
+		mlx_close_window(mlx);
+		ft_putstr_fd((char *) mlx_strerror(mlx_errno), 2);
+		return (EXIT_FAILURE);
+	}
+
+	img = mlx_texture_to_image(mlx, texture);
 	if (!img)
 	{
 		mlx_close_window(mlx);
 		ft_putstr_fd((char *) mlx_strerror(mlx_errno), 2);
 		return (EXIT_FAILURE);
 	}
-	ft_memset(img->pixels, 255, img->width * img->height * sizeof(int));
-	if (mlx_image_to_window(mlx, img, 0, 0) == -1)
+	if (mlx_image_to_window(mlx, img, map->player.position[0].x * 32,
+			map->player.position[0].y * 32) == -1)
 	{
 		mlx_close_window(mlx);
 		ft_putstr_fd((char *) mlx_strerror(mlx_errno), 2);
@@ -81,6 +90,8 @@ int32_t	main(int32_t argc, const char *argv[])
 	}
 	mlx_key_hook(mlx, &keyhook, mlx);
 	mlx_loop(mlx);
+	mlx_delete_image(mlx, img);
+	mlx_delete_texture(texture);
 	mlx_terminate(mlx);
 	return (EXIT_SUCCESS);
 }
