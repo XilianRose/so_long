@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:39:27 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/28 15:28:41 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/30 15:10:08 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,9 +124,11 @@ static bool	check_mapcomponents(char *row, t_map_info *map, t_error *errme)
 				map->exit.count++;
 			else if (row[i] == 'P')
 				map->player.count++;
+			else if (row[i] == '1')
+				map->wall.count++;
 			if (map->exit.count > 1 || map->player.count > 1)
 				return (ft_printf("%s", errme->map4), false);
-			if (ft_strchr("CEP", row[i]) != NULL)
+			if (ft_strchr("1CEP", row[i]) != NULL)
 				save_mapcomponents(map, i, map->rows, row[i]);
 			i++;
 		}

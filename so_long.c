@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 11:41:05 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/29 12:12:34 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/30 15:22:55 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	main(int argc, char **argv)
 	if (map_validation(&file, &map, &errme) == false)
 		return (0);
 	close(file.fd);
-	if (start(&map) == EXIT_SUCCESS)
+	if (window_management(&map) == EXIT_SUCCESS)
 		return (1);
 	return (0);
 }

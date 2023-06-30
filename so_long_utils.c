@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:40:32 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/28 15:16:59 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/06/30 15:52:25 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,25 @@
 	map struct, indicated by the character at the current position. */
 void	save_mapcomponents(t_map_info *map, int x, int y, char c)
 {
-	int	i;
-
 	if (c == 'C')
 	{
-		i = map->collect.count - 1;
-		map->collect.position[i].x = x;
-		map->collect.position[i].y = y;
+		map->collect.position[map->collect.count - 1].x = x;
+		map->collect.position[map->collect.count - 1].y = y;
 	}
 	else if (c == 'E')
 	{
-		i = map->exit.count - 1;
-		map->exit.position[i].x = x;
-		map->exit.position[i].y = y;
+		map->exit.position[map->exit.count - 1].x = x;
+		map->exit.position[map->exit.count - 1].y = y;
 	}
 	else if (c == 'P')
 	{
-		i = map->player.count - 1;
-		map->player.position[i].x = x;
-		map->player.position[i].y = y;
+		map->player.position[map->player.count - 1].x = x;
+		map->player.position[map->player.count - 1].y = y;
+	}
+	else if (c == '1')
+	{
+		map->wall.position[map->wall.count - 1].x = x;
+		map->wall.position[map->wall.count - 1].y = y;
 	}
 }
 
