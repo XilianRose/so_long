@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/02 16:33:24 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/02 17:42:57 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/03 10:58:49 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ mlx_image_t	*load_asset(char *str, mlx_t *mlx)
 	return (img);
 }
 
-int32_t	load_walls(t_map_info *map, mlx_t *mlx)
+static int32_t	load_walls(t_map_info *map, mlx_t *mlx)
 {
 	map->wall.image[0] = load_asset("assets/top_left.png", mlx);
 	if (!map->wall.image[0])
@@ -56,7 +56,7 @@ int32_t	load_walls(t_map_info *map, mlx_t *mlx)
 	return (EXIT_SUCCESS);
 }
 
-int32_t	load_player(t_map_info *map, mlx_t *mlx)
+static int32_t	load_player(t_map_info *map, mlx_t *mlx)
 {
 	map->player.image[0] = load_asset("assets/cat_idle.png", mlx);
 	if (!map->player.image[0])

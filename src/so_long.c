@@ -6,11 +6,21 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 11:41:05 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/02 13:05:48 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/03 15:08:19 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
+
+void	initialize_map_info(t_map_info *map)
+{
+	map->player.count = 0;
+	map->collect.count = 0;
+	map->exit.count = 0;
+	map->wall.count = 0;
+	map->empty.count = 0;
+	map->moves = 0;
+}
 
 bool	map_validation(t_file_info *file, t_map_info *map, t_error *errme)
 {
@@ -32,7 +42,7 @@ bool	map_validation(t_file_info *file, t_map_info *map, t_error *errme)
 		return (perror("Error\n"), close(file->fd), false);
 	check_path(map, map->player.position[0].x,
 		map->player.position[0].y, visited);
-	return (true);
+	return (my_freearray((char **)visited), true);
 }
 
 bool	file_validation(t_file_info *file, t_error *errme)
@@ -61,10 +71,12 @@ int	main(int argc, char **argv)
 	file.argv = argv;
 	if (file_validation(&file, &errme) == false)
 		return (0);
+	initialize_map_info(&map);
 	if (map_validation(&file, &map, &errme) == false)
 		return (0);
 	close(file.fd);
-	// if (window_management(&map) == EXIT_SUCCESS)
-	// 	return (1);
+	if (window_management(&map) == EXIT_SUCCESS)
+		return (1);
+	my_freearray(map.grid);
 	return (0);
 }

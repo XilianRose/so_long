@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   so_long_utils.c                                    :+:    :+:            */
+/*   utils.c                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:40:32 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/02 12:40:07 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/03 15:05:40 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,8 @@ void	save_map(int fd, t_map_info *map)
 			map->grid[i] = row;
 		else
 			break ;
-		my_freestr(&row);
 		i++;
 	}
-	my_freestr(&row);
 	return ;
 }
 

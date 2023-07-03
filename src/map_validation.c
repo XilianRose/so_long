@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:39:27 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/02 12:40:03 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/03 11:44:54 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ bool	check_path(t_map_info *map, int x, int y, bool **visited)
 	any time, the char is not '1' it wil return an error message and false. */
 bool	check_mapwalls(t_map_info *map, t_error *errme)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (i < map->cols)
@@ -109,12 +109,13 @@ bool	check_mapwalls(t_map_info *map, t_error *errme)
 
 	If the map consists of only the correct components and not more than 1
 	exit or starting position it's return true */
+
 static bool	check_mapcomponents(char *row, t_map_info *map, t_error *errme)
 {
 	int	i;
 
 	i = 0;
-	while (i < map->cols - 1)
+	while (i < map->cols)
 	{
 		if (ft_strchr("01CEP", row[i]) != NULL)
 		{
@@ -162,7 +163,7 @@ bool	check_mapshape(int fd, t_map_info *map, t_error *errme)
 	{
 		if (check_mapcomponents(row, map, errme) == false)
 			break ;
-		if ((int) ft_strlen(row) - 1 != map->cols)
+		if ((int)ft_strlen(row) - 1 != map->cols)
 			return (ft_printf("%s", errme->map2), my_freestr(&row), false);
 		my_freestr(&row);
 		map->rows++;
