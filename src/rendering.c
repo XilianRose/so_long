@@ -6,57 +6,70 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/30 10:35:09 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/02 12:58:18 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/02 17:02:07 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
-mlx_image_t	*render_img(char *str, mlx_t *mlx, int x, int y)
+int32_t	render_img(mlx_t *mlx, mlx_image_t *img, int x, int y)
 {
-	mlx_texture_t	*texture;
-	mlx_image_t		*img;
-
-	texture = mlx_load_png(str);
-	if (!texture)
-		return (error(mlx), NULL);
-	img = mlx_texture_to_image(mlx, texture);
-	if (!img)
-		return (error(mlx), NULL);
 	if (mlx_image_to_window(mlx, img, x * 32, y * 32) == -1)
-		return (error(mlx), NULL);
-	mlx_delete_texture(texture);
-	return (img);
+		return (error(mlx), EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 int32_t	render_grass(t_map_info *map, mlx_t *mlx)
 {
 	int			i;
 	int			j;
-	char		*str[2];
 	int			random;
 
 	i = 1;
 	j = 1;
-	str[0] = "assets/grass.png";
-	str[1] = "assets/grass2.png";
 	while (i < map->rows - 1)
 	{
-		random = rand() % 2;
 		j = 1;
-		if (render_img(str[random], mlx, i, j) == NULL)
-			return (EXIT_FAILURE);
 		while (j < map->cols - 1)
 		{
 			random = rand() % 2;
-			if (render_img(str[random], mlx, i, j) == NULL)
-				return (EXIT_FAILURE);
+			if (render_img(mlx, map->empty.image[random], i * 32, j * 32) == 1)
+				return (error(mlx), EXIT_FAILURE);
 			j++;
 		}
 		i++;
 	}
 	return (EXIT_SUCCESS);
 }
+
+// int32_t	render_grass(t_map_info *map, mlx_t *mlx)
+// {
+// 	int			i;
+// 	int			j;
+// 	char		*str[2];
+// 	int			random;
+
+// 	i = 1;
+// 	j = 1;
+// 	str[0] = "assets/grass.png";
+// 	str[1] = "assets/grass2.png";
+// 	while (i < map->rows - 1)
+// 	{
+// 		random = rand() % 2;
+// 		j = 1;
+// 		if (render_img(str[random], mlx, i, j) == NULL)
+// 			return (EXIT_FAILURE);
+// 		while (j < map->cols - 1)
+// 		{
+// 			random = rand() % 2;
+// 			if (render_img(str[random], mlx, i, j) == NULL)
+// 				return (EXIT_FAILURE);
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// 	return (EXIT_SUCCESS);
+// }
 
 int32_t	render_walls(t_map_info *map, mlx_t *mlx)
 {

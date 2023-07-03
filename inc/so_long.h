@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 12:46:26 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/02 12:58:39 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/02 17:43:55 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@
 # include "MLX42/include/MLX42/MLX42.h"
 
 typedef struct s_coordinates {
-	int	x;
-	int	y;
+	int				x;
+	int				y;
 }	t_coordinates;
 
 typedef struct s_component {
 	int				count;
-	t_coordinates	position[42];
-	// mlx_image_t		*instance[84];
+	t_coordinates	position[84];
+	mlx_image_t		*image[10];
 }	t_component;
 
 typedef struct s_map_info {
@@ -68,16 +68,16 @@ typedef struct s_error {
 	char	*map9;
 }	t_error;
 
-typedef struct s_dimensions {
-	int	width;
-	int	height;
-}	t_dimensions;
+// typedef struct s_dimensions {
+// 	int	width;
+// 	int	height;
+// }	t_dimensions;
 
-typedef struct s_game_info {
-	int					tilesize;
-	struct s_dimensions	window;
+// typedef struct s_game_info {
+// 	int					tilesize;
+// 	struct s_dimensions	window;
 
-}	t_game_info;
+// }	t_game_info;
 
 void		error_message(t_error *errme);
 void		save_map(int fd, t_map_info *map);
@@ -90,7 +90,7 @@ bool		check_path(t_map_info *map, int x, int y, bool **visited);
 int32_t		window_management(t_map_info *map);
 int32_t		error(mlx_t	*mlx);
 
-mlx_image_t	*render_img(char *str, mlx_t *mlx, int x, int y);
+int32_t		render_img(mlx_t *mlx, mlx_image_t *img, int x, int y);
 int32_t		render_grass(t_map_info *map, mlx_t *mlx);
 int32_t		render_walls(t_map_info *map, mlx_t *mlx);
 int32_t		render_sprites(t_map_info *map, mlx_t *mlx);
