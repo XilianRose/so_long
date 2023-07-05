@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 11:41:05 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/05 13:57:06 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/05 17:00:10 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,10 @@ int	main(int argc, char **argv)
 				map.moves);
 		else
 			ft_printf("You didn't catch all the mice. Better luck next time.\n");
+		system("leaks so_long");
 		return (1);
 	}
 	my_freearray(map.grid);
+	system("leaks so_long");
 	return (0);
 }
