@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 11:41:05 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/03 15:08:19 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/05 13:57:06 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,14 @@ int	main(int argc, char **argv)
 		return (0);
 	close(file.fd);
 	if (window_management(&map) == EXIT_SUCCESS)
+	{
+		if (map.collect.count == map.collected)
+			ft_printf("Congratulations! You won the game in %i moves.\n",
+				map.moves);
+		else
+			ft_printf("You didn't catch all the mice. Better luck next time.\n");
 		return (1);
+	}
 	my_freearray(map.grid);
 	return (0);
 }

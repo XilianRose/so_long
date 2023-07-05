@@ -6,7 +6,7 @@
 #    By: mstegema <mstegema@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/16 12:00:14 by mstegema      #+#    #+#                  #
-#    Updated: 2023/06/28 13:23:39 by mstegema      ########   odam.nl          #
+#    Updated: 2023/07/05 16:26:10 by mstegema      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,13 +91,11 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c $(HEADER)
 	@echo "Compiling: $(PURPLE)$<$(NC)"
 
 clean:
-	@rm -f $(OBJDIR)/*.o
+	@rm -rf $(OBJDIR)
 	@echo "$(PURPLE)object files$(NC) have been removed"
 
 fclean: clean
-	@rm -f $(BINDIR)/$(NAME)
-	@rmdir $(BINDIR)
-	@rmdir $(OBJDIR)
+	@rm -rf $(BINDIR)
 	@echo "$(PURPLE)$(NAME) & directories$(NC) have been removed"
 
 re: fclean all

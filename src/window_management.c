@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/25 15:41:22 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/03 14:16:13 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/05 13:26:38 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@ static void	keyhook(mlx_key_data_t keydata, void *param)
 	map = param;
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		mlx_close_window(map->mlx);
+	if (keydata.key == MLX_KEY_EQUAL && keydata.action == MLX_RELEASE)
+		mlx_set_window_size(map->mlx, map->mlx->width + 32,
+			map->mlx->height + 32);
+	if (keydata.key == MLX_KEY_MINUS && keydata.action == MLX_RELEASE)
+		mlx_set_window_size(map->mlx, map->mlx->width - 32,
+			map->mlx->height - 32);
 	if (((keydata.key == MLX_KEY_UP) || (keydata.key == MLX_KEY_W))
 		&& (keydata.action == MLX_RELEASE))
 		move_up(map);
@@ -41,31 +47,11 @@ static void	keyhook(mlx_key_data_t keydata, void *param)
 		move_right(map);
 }
 
-// static void	keyhook(mlx_key_data_t keydata, void *param)
-// {
-// 	t_map_info	*map;
-
-// 	map = param;
-// 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-// 		mlx_close_window(map->mlx);
-// 	if (((keydata.key == MLX_KEY_UP) || (keydata.key == MLX_KEY_W))
-// 		&& (keydata.action == MLX_RELEASE))
-// 		map->player.image[0]->instances[0].y -= 32;
-// 	if (((keydata.key == MLX_KEY_DOWN) || (keydata.key == MLX_KEY_S))
-// 		&& (keydata.action == MLX_RELEASE))
-// 		map->player.image[0]->instances[0].y += 32;
-// 	if (((keydata.key == MLX_KEY_LEFT) || (keydata.key == MLX_KEY_A))
-// 		&& (keydata.action == MLX_RELEASE))
-// 		map->player.image[0]->instances[0].x -= 32;
-// 	if (((keydata.key == MLX_KEY_RIGHT) || (keydata.key == MLX_KEY_D))
-// 		&& (keydata.action == MLX_RELEASE))
-// 		map->player.image[0]->instances[0].x += 32;
-// }
-
 int32_t	window_management(t_map_info *map)
 {
-	mlx_t			*mlx;
+	mlx_t	*mlx;
 
+	mlx_set_setting(MLX_STRETCH_IMAGE, true);
 	mlx = mlx_init(map->cols * 32, map->rows * 32, "Lucky Cat", true);
 	if (!mlx)
 		return (error(NULL));

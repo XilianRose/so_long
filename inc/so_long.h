@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 12:46:26 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/03 15:28:47 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/05 14:46:13 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # include <stdio.h>
 # include <math.h>
 # include <stdbool.h>
-# include "libft/inc/libft.h"
-# include "MLX42/include/MLX42/MLX42.h"
+# include "../libft/inc/libft.h"
+# include "../MLX42/include/MLX42/MLX42.h"
 
 typedef struct s_coordinates {
 	int				x;
@@ -71,16 +71,9 @@ typedef struct s_error {
 	char	*map9;
 }	t_error;
 
-// typedef struct s_dimensions {
-// 	int	width;
-// 	int	height;
-// }	t_dimensions;
-
-// typedef struct s_game_info {
-// 	int					tilesize;
-// 	struct s_dimensions	window;
-
-// }	t_game_info;
+bool		file_validation(t_file_info *file, t_error *errme);
+bool		map_validation(t_file_info *file, t_map_info *map, t_error *errme);
+void		initialize_map_info(t_map_info *map);
 
 bool		check_mapshape(int fd, t_map_info *map, t_error *errme);
 bool		check_mapwalls(t_map_info *map, t_error *errme);
