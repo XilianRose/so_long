@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 12:46:26 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/05 14:46:13 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/06 12:10:33 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@
 # include <stdbool.h>
 # include "../libft/inc/libft.h"
 # include "../MLX42/include/MLX42/MLX42.h"
+
+# define MAP_OK 1
+# define MAP_NV 0
+# define FILE_OK 1
+# define FILE_NV 0
 
 typedef struct s_coordinates {
 	int				x;
@@ -57,8 +62,6 @@ typedef struct s_error {
 	char	*file0;
 	char	*file1;
 	char	*file2;
-	char	*file3;
-	char	*file4;
 	char	*map0;
 	char	*map1;
 	char	*map2;
@@ -67,16 +70,18 @@ typedef struct s_error {
 	char	*map5;
 	char	*map6;
 	char	*map7;
-	char	*map8;
-	char	*map9;
+	char	*win0;
+	char	*win1;
+	char	*win2;
+	char	*win3;
 }	t_error;
 
-bool		file_validation(t_file_info *file, t_error *errme);
-bool		map_validation(t_file_info *file, t_map_info *map, t_error *errme);
+int			file_validation(t_file_info *file, t_error *errme);
+int			map_validation(t_file_info *file, t_map_info *map, t_error *errme);
 void		initialize_map_info(t_map_info *map);
 
-bool		check_mapshape(int fd, t_map_info *map, t_error *errme);
-bool		check_mapwalls(t_map_info *map, t_error *errme);
+int			check_mapshape(int fd, t_map_info *map, t_error *errme);
+int			check_mapwalls(t_map_info *map, t_error *errme);
 bool		check_path(t_map_info *map, int x, int y, bool **visited);
 
 int32_t		window_management(t_map_info *map);
@@ -94,6 +99,7 @@ void		move_left(t_map_info *map);
 void		move_right(t_map_info *map);
 
 void		error_message(t_error *errme);
+void		exit_wrapper(char *str);
 void		save_map(int fd, t_map_info *map);
 void		save_mapcomponents(t_map_info *map, int x, int y, char c);
 #endif

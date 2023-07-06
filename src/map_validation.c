@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:39:27 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/03 11:44:54 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/06 12:19:59 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ bool	check_path(t_map_info *map, int x, int y, bool **visited)
 	it first compares the chars in the first and last row at the same time, then
 	it compares the chars in the first and last column at the same time. If, at
 	any time, the char is not '1' it wil return an error message and false. */
-bool	check_mapwalls(t_map_info *map, t_error *errme)
+int	check_mapwalls(t_map_info *map, t_error *errme)
 {
 	int	i;
 
@@ -86,7 +86,7 @@ bool	check_mapwalls(t_map_info *map, t_error *errme)
 		if (map->grid[0][i] == '1' && map->grid[map->rows - 1][i] == '1')
 			i++;
 		else
-			return (ft_printf("%s", errme->map6), false);
+			exit_wrapper(errme->map6);
 	}
 	i = 0;
 	while (i < map->rows)
@@ -94,9 +94,9 @@ bool	check_mapwalls(t_map_info *map, t_error *errme)
 		if (map->grid[i][0] == '1' && map->grid[i][map->cols - 1] == '1')
 			i++;
 		else
-			return (ft_printf("%s", errme->map6), false);
+			exit_wrapper(errme->map6);
 	}
-	return (true);
+	return (MAP_OK);
 }
 
 /*	this functions checks if the given row contains only valid map components.
@@ -110,7 +110,7 @@ bool	check_mapwalls(t_map_info *map, t_error *errme)
 	If the map consists of only the correct components and not more than 1
 	exit or starting position it's return true */
 
-static bool	check_mapcomponents(char *row, t_map_info *map, t_error *errme)
+static int	check_mapcomponents(char *row, t_map_info *map, t_error *errme)
 {
 	int	i;
 
@@ -128,15 +128,15 @@ static bool	check_mapcomponents(char *row, t_map_info *map, t_error *errme)
 			else if (row[i] == '1')
 				map->wall.count++;
 			if (map->exit.count > 1 || map->player.count > 1)
-				return (ft_printf("%s", errme->map4), false);
+				exit_wrapper(errme->map4);
 			if (ft_strchr("1CEP", row[i]) != NULL)
 				save_mapcomponents(map, i, map->rows, row[i]);
 			i++;
 		}
 		else
-			return (ft_printf("%s", errme->map5), false);
+			exit_wrapper(errme->map5);
 	}
-	return (true);
+	return (MAP_OK);
 }
 
 /*	this function checks if the map has a valid shape. It first checks if it's
@@ -147,7 +147,7 @@ static bool	check_mapcomponents(char *row, t_map_info *map, t_error *errme)
 	Free the strings allocated by GNL
 
 	The row is then put into a function that checks the map components */
-bool	check_mapshape(int fd, t_map_info *map, t_error *errme)
+int	check_mapshape(int fd, t_map_info *map, t_error *errme)
 {
 	char	*row;
 
@@ -155,21 +155,20 @@ bool	check_mapshape(int fd, t_map_info *map, t_error *errme)
 	map->cols = 0;
 	row = get_next_line(fd);
 	if (row == NULL)
-		return (ft_printf("%s", errme->map0), false);
+		exit_wrapper(errme->map0);
 	map->cols = ft_strlen(row) - 1;
 	if (map->cols < 3)
-		return (ft_printf("%s", errme->map1), my_freestr(&row), false);
+		exit_wrapper(errme->map1);
 	while (row != NULL)
 	{
-		if (check_mapcomponents(row, map, errme) == false)
-			break ;
+		check_mapcomponents(row, map, errme);
 		if ((int)ft_strlen(row) - 1 != map->cols)
-			return (ft_printf("%s", errme->map2), my_freestr(&row), false);
+			exit_wrapper(errme->map2);
 		my_freestr(&row);
 		map->rows++;
 		row = get_next_line(fd);
 	}
 	if (map->rows < 3)
-		return (ft_printf("%s", errme->map3), my_freestr(&row), false);
-	return (my_freestr(&row), true);
+		exit_wrapper(errme->map3);
+	return (MAP_OK);
 }

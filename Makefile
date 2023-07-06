@@ -6,7 +6,7 @@
 #    By: mstegema <mstegema@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/10 14:19:38 by mstegema      #+#    #+#                  #
-#    Updated: 2023/07/05 16:45:28 by mstegema      ########   odam.nl          #
+#    Updated: 2023/07/05 17:49:59 by mstegema      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,9 @@ NAME	= so_long
 # compilation
 CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror
+ifdef DEBUG
+CFLAGS	+= -fsanitize=address -g
+endif
 HEADER	= $(INCDIR)/so_long.h
 LIBFT	= libft/bin/libft.a
 MLX42	= MLX42/build/libmlx42.a
@@ -38,6 +41,8 @@ SRCS	= src/so_long.c \
 		src/rendering.c \
 		src/gameplay.c \
 		src/utils.c
+
+# objects
 OBJS	= $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
 # colours
@@ -65,6 +70,9 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c $(HEADER)
 
 home:
 	$(MAKE) AT_HOME=1
+
+debug:
+	$(MAKE) DEBUG=1
 
 clean:
 	@$(MAKE) clean -C ./libft

@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:40:32 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/03 15:05:40 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/06 12:18:20 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	save_mapcomponents(t_map_info *map, int x, int y, char c)
 		map->wall.position[map->wall.count - 1].x = x;
 		map->wall.position[map->wall.count - 1].y = y;
 	}
+	return ;
 }
 
 /*	this function copies the map from the file to the allocated memory */
@@ -59,13 +60,19 @@ void	save_map(int fd, t_map_info *map)
 	return ;
 }
 
+void	exit_wrapper(char *str)
+{
+	ft_printf("%s", str);
+	exit(0);
+}
+
 /*	this function's sole reason for existance is the fact that there's a
 	character limit per line. So i decided to save the strings, to be
 	printed when an error occurs, in a struct. That's it*/
 void	error_message(t_error *errme)
 {
 	errme->file0 = "Error\nplease give one filename as argument\n";
-	errme->file1 = "Error\nnot a '->ber' map description file\n";
+	errme->file1 = "Error\nnot a '.ber' map description file\n";
 	errme->file2 = "Error\nencountered problem while opening the file\n";
 	errme->map0 = "Error\nmap is empty\n";
 	errme->map1 = "Error\nmap is too narrow\n";
@@ -74,5 +81,10 @@ void	error_message(t_error *errme)
 	errme->map4 = "Error\nmap has more than 1 exit or starting position\n";
 	errme->map5 = "Error\nmap contains invalid map components\n";
 	errme->map6 = "Error\nmap is not completely walled\n";
+	errme->map7 = "Error\nmap doesn't have a valid path\n";
+	errme->win0 = "Error\n";
+	errme->win1 = "Error\n";
+	errme->win2 = "Error\n";
+	errme->win3 = "Error\n";
 	return ;
 }

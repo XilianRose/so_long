@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:31:39 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/02 13:13:02 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/06 12:17:43 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 /* frees the string and sets it to NULL */
 
-void	my_freestr(char **str)
+void	my_freestr(char *str)
 {
-	if (str != NULL && *str != NULL)
-	{
-		free(*str);
-		*str = NULL;
-	}
+	if (str == NULL)
+		return ;
+	free(str);
+	str = NULL;
 }
