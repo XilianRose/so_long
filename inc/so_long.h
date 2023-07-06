@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 12:46:26 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/06 12:10:33 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/06 15:34:02 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,12 @@
 
 # define MAP_OK 1
 # define MAP_NV 0
+
 # define FILE_OK 1
 # define FILE_NV 0
+
+# define WIN 1
+# define LOSE 0
 
 typedef struct s_coordinates {
 	int				x;
@@ -50,6 +54,7 @@ typedef struct s_map_info {
 	mlx_t			*mlx;
 	int				moves;
 	int				collected;
+	int				status;
 }	t_map_info;
 
 typedef struct s_file_info {
@@ -70,10 +75,6 @@ typedef struct s_error {
 	char	*map5;
 	char	*map6;
 	char	*map7;
-	char	*win0;
-	char	*win1;
-	char	*win2;
-	char	*win3;
 }	t_error;
 
 int			file_validation(t_file_info *file, t_error *errme);
@@ -100,6 +101,7 @@ void		move_right(t_map_info *map);
 
 void		error_message(t_error *errme);
 void		exit_wrapper(char *str);
+void		free_boolarray(bool **array);
 void		save_map(int fd, t_map_info *map);
 void		save_mapcomponents(t_map_info *map, int x, int y, char c);
 #endif

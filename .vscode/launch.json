@@ -8,8 +8,8 @@
 			"type": "lldb",
 			"request": "launch",
 			"name": "Debug",
-			"program": "${workspaceFolder}/a.out",
-			"args": ["tests/map1.ber"],
+			"program": "${workspaceFolder}/so_long",
+			"args": ["maps/iv-shape.ber"],
 			"cwd": "${workspaceFolder}"
 		}
 	]

@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:40:32 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/06 12:18:20 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/06 16:36:35 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,24 @@ void	exit_wrapper(char *str)
 	exit(0);
 }
 
+// void	free_boolarray(bool **array)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (array != NULL && array[i] != NULL)
+// 	{
+// 		free(array[i]);
+// 		array[i] = NULL;
+// 		i++;
+// 	}
+// 	if (array != NULL)
+// 	{
+// 		free(array);
+// 		array = NULL;
+// 	}
+// }
+
 /*	this function's sole reason for existance is the fact that there's a
 	character limit per line. So i decided to save the strings, to be
 	printed when an error occurs, in a struct. That's it*/
@@ -82,9 +100,5 @@ void	error_message(t_error *errme)
 	errme->map5 = "Error\nmap contains invalid map components\n";
 	errme->map6 = "Error\nmap is not completely walled\n";
 	errme->map7 = "Error\nmap doesn't have a valid path\n";
-	errme->win0 = "Error\n";
-	errme->win1 = "Error\n";
-	errme->win2 = "Error\n";
-	errme->win3 = "Error\n";
 	return ;
 }

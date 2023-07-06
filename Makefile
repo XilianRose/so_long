@@ -6,7 +6,7 @@
 #    By: mstegema <mstegema@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/10 14:19:38 by mstegema      #+#    #+#                  #
-#    Updated: 2023/07/05 17:49:59 by mstegema      ########   odam.nl          #
+#    Updated: 2023/07/06 14:41:13 by mstegema      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,13 +14,11 @@ NAME	= so_long
 
 # compilation
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror
-ifdef DEBUG
-CFLAGS	+= -fsanitize=address -g
-endif
 HEADER	= $(INCDIR)/so_long.h
 LIBFT	= libft/bin/libft.a
 MLX42	= MLX42/build/libmlx42.a
+CFLAGS	= -Wall -Wextra -Werror
+
 ifdef AT_HOME
 LINKS	= -Iinclude -lglfw -L"/opt/homebrew/Cellar/glfw/3.3.8/lib/"
 else
@@ -49,6 +47,7 @@ OBJS	= $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 PURPLE	= \033[0;35m
 NC		= \033[0m
 
+#rules
 all: $(LIBFT) $(MLX42) $(BINDIR)/$(NAME)
 
 $(LIBFT):

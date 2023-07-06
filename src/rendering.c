@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/30 10:35:09 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/03 12:50:35 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/06 14:31:17 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int32_t	render_grass(t_map_info *map, mlx_t *mlx)
 		while (j < map->cols - 1)
 		{
 			random = rand() % 2;
-			if (render_img(mlx, map->empty.image[random], i, j) == 1)
+			if (render_img(mlx, map->empty.image[random], j, i) == 1)
 				return (error(mlx), EXIT_FAILURE);
 			j++;
 		}
@@ -43,7 +43,7 @@ static int32_t	render_grass(t_map_info *map, mlx_t *mlx)
 }
 
 /*	[0][1][2]
-	[3]   [4]
+	[3][8][4]
 	[5][6][7]	*/
 
 static int32_t	render_walls(t_map_info *map, mlx_t *mlx)

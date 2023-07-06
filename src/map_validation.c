@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:39:27 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/06 12:19:59 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/06 15:22:24 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ static bool	check_destinations(t_map_info *map, bool **visited)
 	i = 0;
 	x = map->exit.position[i].x;
 	y = map->exit.position[i].y;
-	if (visited[x][y] != true)
+	if (visited[y][x] != true)
 		return (false);
 	while (i < map->collect.count)
 	{
 		x = map->collect.position[i].x;
 		y = map->collect.position[i].y;
-		if (visited[x][y] != true)
+		if (visited[y][x] != true)
 			return (false);
 		i++;
 	}
@@ -55,11 +55,11 @@ bool	check_path(t_map_info *map, int x, int y, bool **visited)
 	if (check_destinations(map, visited) == true)
 		return (true);
 	if (x < 0 || x > map->cols || y < 0 || y > map->rows
-		|| ft_strchr("0CEP", map->grid[x][y]) == NULL)
+		|| ft_strchr("0CEP", map->grid[y][x]) == NULL)
 		return (false);
-	if (visited[x][y] == true)
+	if (visited[y][x] == true)
 		return (false);
-	visited[x][y] = true;
+	visited[y][x] = true;
 	if ((check_path(map, x - 1, y - 1, visited) == true)
 		|| (check_path(map, x - 1, y, visited) == true)
 		|| (check_path(map, x, y - 1, visited) == true)
@@ -161,10 +161,10 @@ int	check_mapshape(int fd, t_map_info *map, t_error *errme)
 		exit_wrapper(errme->map1);
 	while (row != NULL)
 	{
-		check_mapcomponents(row, map, errme);
 		if ((int)ft_strlen(row) - 1 != map->cols)
 			exit_wrapper(errme->map2);
-		my_freestr(&row);
+		check_mapcomponents(row, map, errme);
+		my_freestr(row);
 		map->rows++;
 		row = get_next_line(fd);
 	}

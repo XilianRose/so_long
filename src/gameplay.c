@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   move_player.c                                      :+:    :+:            */
+/*   gameplay.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/03 13:08:18 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/05 13:50:51 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/06 15:48:41 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	encounter(t_map_info *map, int x, int y)
 	}
 	if (map->grid[y][x] == 'E' &&
 		map->exit.image[0]->instances[0].enabled == true)
-		mlx_close_window(map->mlx);
+		return ((map->status = WIN), mlx_close_window(map->mlx));
 }
 
 void	move_up(t_map_info *map)

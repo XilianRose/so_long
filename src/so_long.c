@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 11:41:05 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/06 12:30:20 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/06 16:40:39 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,22 @@ int	map_validation(t_file_info *file, t_map_info *map, t_error *errme)
 {
 	bool		**visited;
 
-	visited = NULL;
 	check_mapshape(file->fd, map, errme);
 	close(file->fd);
 	file->fd = open(file->argv[1], O_RDONLY);
-	map->grid = my_allocarray(map->grid, map->cols, map->rows);
+	map->grid = my_allocarray(map->cols, map->rows);
 	if (!map->grid)
 		return (perror("Error\n"), close(file->fd), MAP_NV);
 	save_map(file->fd, map);
 	check_mapwalls(map, errme);
-	visited = (bool **)my_allocarray((char **)visited, map->cols, map->rows);
+	visited = (bool **)my_allocarray(map->cols, map->rows);
 	if (!visited)
 		return (perror("Error\n"), close(file->fd), MAP_NV);
-	// if (check_path(map, map->player.position[0].x,
-	// 		map->player.position[0].y, visited) == false)
-	// 	exit_wrapper(errme->map7);
-	check_path(map, map->player.position[0].x,
-			map->player.position[0].y, visited);
+	if (check_path(map, map->player.position[0].x,
+			map->player.position[0].y, visited) == false)
+		exit_wrapper(errme->map7);
+	// my_freearray((char **) visited);
+	// free_boolarray(visited);
 	return (MAP_OK);
 }
 
@@ -62,7 +61,7 @@ void	end_game(t_map_info *map)
 {
 	if (map->collect.count == map->collected)
 	{
-		if (map->collect.image[0]->instances[0].enabled == false)
+		if (map->status == WIN)
 			ft_printf("Congratulations! You won the game in %i moves.\n",
 				map->moves);
 		else
@@ -70,8 +69,12 @@ void	end_game(t_map_info *map)
 	}
 	else
 		ft_printf("You didn't catch all the mice. Better luck next time.\n");
-	system("leaks so_long");
 	exit(EXIT_SUCCESS);
+}
+
+static void	check_leaks(void)
+{
+	system("leaks -q so_long");
 }
 
 // /*	the main checks if there's a ".ber" file given as input and opens it if
@@ -83,6 +86,7 @@ int	main(int argc, char **argv)
 	t_map_info	map;
 	t_error		errme;
 
+	atexit(check_leaks);
 	error_message(&errme);
 	file.argc = argc;
 	file.argv = argv;
@@ -94,6 +98,5 @@ int	main(int argc, char **argv)
 	close(file.fd);
 	if (window_management(&map) == EXIT_SUCCESS)
 		end_game(&map);
-	system("leaks so_long");
 	exit(EXIT_FAILURE);
 }

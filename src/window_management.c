@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/25 15:41:22 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/05 13:26:38 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/06 15:43:43 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,11 @@ int32_t	window_management(t_map_info *map)
 	if (!mlx)
 		return (error(NULL));
 	map->mlx = mlx;
-	load_all(map, mlx);
-	render_all(map, mlx);
+	if (load_all(map, mlx) == EXIT_FAILURE
+		|| render_all(map, mlx) == EXIT_FAILURE)
+		return (mlx_terminate(mlx), EXIT_FAILURE);
 	mlx_key_hook(mlx, &keyhook, map);
 	mlx_loop(mlx);
-	mlx_terminate(mlx);
-	return (EXIT_SUCCESS);
+	mlx_close_window(map->mlx);
+	return (mlx_terminate(mlx), EXIT_SUCCESS);
 }

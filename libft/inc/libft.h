@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/03 11:09:09 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/28 13:34:02 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/06 16:27:22 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,9 @@ char	*ft_strchr_gnl(const char *s, int c);
 /* added functions */
 int		my_intlen(int n);
 char	*my_strendstr(const char *hay, const char *needle);
-void	my_freestr(char **str);
+void	my_freestr(char *str);
 void	*my_realloc(void *ptr, size_t size);
-char	**my_allocarray(char **array, int x, int y);
+char	**my_allocarray(int x, int y);
 void	my_freearray(char **array);
-
 
 #endif

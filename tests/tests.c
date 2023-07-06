@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/09 14:12:24 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/25 14:31:19 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/06 14:19:48 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,3 +249,9 @@ int	main(int argc, char **argv)
 	return (0);
 }
 */
+
+// static void	check_leaks(void)
+// {
+// 	system("leaks so_long");
+// }
+// atexit(check_leaks);
