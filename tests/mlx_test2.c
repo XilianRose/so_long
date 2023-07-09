@@ -6,14 +6,14 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/26 11:51:48 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/06/26 12:06:31 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/09 22:30:52 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "MLX42/include/MLX42/MLX42.h"
+#include "../MLX42/include/MLX42/MLX42.h"
 
 #define WIDTH 512
 #define HEIGHT 512

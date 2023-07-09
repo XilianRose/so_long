@@ -6,7 +6,7 @@
 #    By: mstegema <mstegema@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/10 14:19:38 by mstegema      #+#    #+#                  #
-#    Updated: 2023/07/09 14:51:17 by mstegema      ########   odam.nl          #
+#    Updated: 2023/07/09 22:00:25 by mstegema      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,11 +18,13 @@ CFLAGS	= -Wall -Wextra -Werror
 HEADER	= $(INCDIR)/so_long.h
 LIBFT	= libft/bin/libft.a
 MLX42	= MLX42/build/libmlx42.a
+
 ifdef AT_HOME
 LINKS	= -Iinclude -lglfw -L"/opt/homebrew/Cellar/glfw/3.3.8/lib/"
 else
 LINKS	= -lglfw3 -framework Cocoa -framework OpenGL -framework IOkit
 endif
+
 ifdef DEBUG
 LINKS	+= -fsanitize=address -g
 endif
@@ -50,6 +52,7 @@ OBJS	= $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 PURPLE	= \033[0;35m
 NC		= \033[0m
 
+# rules
 all: $(LIBFT) $(MLX42) $(BINDIR)/$(NAME)
 
 $(LIBFT):
