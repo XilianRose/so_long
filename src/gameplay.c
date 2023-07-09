@@ -6,12 +6,53 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/03 13:08:18 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/06 15:48:41 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/09 15:15:12 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
+/*	this function prints a message corresponding to the game status and amount
+	of mice collected.
+
+	arguments	: the map data struct
+	returns		: it exits with EXIT_SUCCES
+*/
+void	end_game(t_map_info *map)
+{
+	if (map->collect.count == map->collected)
+	{
+		if (map->status == WIN)
+			ft_printf("Congratulations! You won the game in %i moves.\n",
+				map->moves);
+		else
+			ft_printf("Oh no! You failed to offer the mice :(\n");
+	}
+	else
+		ft_printf("You didn't catch all the mice. Better luck next time.\n");
+	exit(EXIT_SUCCESS);
+}
+
+/*	this is the function that gets called on when the player encounters a
+	collectible tile or the exit.
+
+	if it's a collectible and the number of collected is lower than the count
+	of collected, it goes through all the collectible image instances and
+	compares their location to the current location. when found it checks to
+	see if the image instance is enabled or not. If it's enabled it gets
+	disabled and the collected count goes up. after that it checks if the
+	amount of collected is the same as the amount of collectibles and if that's
+	true the image instance of the exit gets enabled.
+
+	if it's the exit and the image instance is enabled, it sets the map status
+	to win and closes the window
+
+	nothing happends when a player moves over a tile with an disabled image
+
+	arguments	: the map data struct, current position coordinates
+	returns		: nothing but does set map status to win and closes window when
+				exit is enabled an reached
+*/
 void	encounter(t_map_info *map, int x, int y)
 {
 	int	i;
@@ -37,108 +78,4 @@ void	encounter(t_map_info *map, int x, int y)
 	if (map->grid[y][x] == 'E' &&
 		map->exit.image[0]->instances[0].enabled == true)
 		return ((map->status = WIN), mlx_close_window(map->mlx));
-}
-
-void	move_up(t_map_info *map)
-{
-	int	x;
-	int	y;
-
-	x = map->player.image[0]->instances[0].x / 32;
-	y = map->player.image[0]->instances[0].y / 32;
-	map->player.image[0]->instances[0].enabled = false;
-	map->player.image[1]->instances[0].enabled = true;
-	map->player.image[2]->instances[0].enabled = false;
-	map->player.image[3]->instances[0].enabled = false;
-	map->player.image[4]->instances[0].enabled = false;
-	if (ft_strchr("0CEP", map->grid[y - 1][x]) != NULL)
-	{
-		map->player.image[0]->instances[0].y -= 32;
-		map->player.image[1]->instances[0].y -= 32;
-		map->player.image[2]->instances[0].y -= 32;
-		map->player.image[3]->instances[0].y -= 32;
-		map->player.image[4]->instances[0].y -= 32;
-		map->moves++;
-		ft_printf("Moves: %i\n", map->moves);
-		if (ft_strchr("CE", map->grid[y - 1][x]) != NULL)
-			encounter(map, x, y - 1);
-	}
-}
-
-void	move_down(t_map_info *map)
-{
-	int	x;
-	int	y;
-
-	x = map->player.image[0]->instances[0].x / 32;
-	y = map->player.image[0]->instances[0].y / 32;
-	map->player.image[0]->instances[0].enabled = false;
-	map->player.image[1]->instances[0].enabled = false;
-	map->player.image[2]->instances[0].enabled = true;
-	map->player.image[3]->instances[0].enabled = false;
-	map->player.image[4]->instances[0].enabled = false;
-	if (ft_strchr("0CEP", map->grid[y + 1][x]) != NULL)
-	{
-		map->player.image[0]->instances[0].y += 32;
-		map->player.image[1]->instances[0].y += 32;
-		map->player.image[2]->instances[0].y += 32;
-		map->player.image[3]->instances[0].y += 32;
-		map->player.image[4]->instances[0].y += 32;
-		map->moves++;
-		ft_printf("Moves: %i\n", map->moves);
-		if (ft_strchr("CE", map->grid[y + 1][x]) != NULL)
-			encounter(map, x, y + 1);
-	}
-}
-
-void	move_left(t_map_info *map)
-{
-	int	x;
-	int	y;
-
-	x = map->player.image[0]->instances[0].x / 32;
-	y = map->player.image[0]->instances[0].y / 32;
-	map->player.image[0]->instances[0].enabled = false;
-	map->player.image[1]->instances[0].enabled = false;
-	map->player.image[2]->instances[0].enabled = false;
-	map->player.image[3]->instances[0].enabled = true;
-	map->player.image[4]->instances[0].enabled = false;
-	if (ft_strchr("0CEP", map->grid[y][x - 1]) != NULL)
-	{
-		map->player.image[0]->instances[0].x -= 32;
-		map->player.image[1]->instances[0].x -= 32;
-		map->player.image[2]->instances[0].x -= 32;
-		map->player.image[3]->instances[0].x -= 32;
-		map->player.image[4]->instances[0].x -= 32;
-		map->moves++;
-		ft_printf("Moves: %i\n", map->moves);
-		if (ft_strchr("CE", map->grid[y][x - 1]) != NULL)
-			encounter(map, x - 1, y);
-	}
-}
-
-void	move_right(t_map_info *map)
-{
-	int	x;
-	int	y;
-
-	x = map->player.image[0]->instances[0].x / 32;
-	y = map->player.image[0]->instances[0].y / 32;
-	map->player.image[0]->instances[0].enabled = false;
-	map->player.image[1]->instances[0].enabled = false;
-	map->player.image[2]->instances[0].enabled = false;
-	map->player.image[3]->instances[0].enabled = false;
-	map->player.image[4]->instances[0].enabled = true;
-	if (ft_strchr("0CEP", map->grid[y][x + 1]) != NULL)
-	{
-		map->player.image[0]->instances[0].x += 32;
-		map->player.image[1]->instances[0].x += 32;
-		map->player.image[2]->instances[0].x += 32;
-		map->player.image[3]->instances[0].x += 32;
-		map->player.image[4]->instances[0].x += 32;
-		map->moves++;
-		ft_printf("Moves: %i\n", map->moves);
-		if (ft_strchr("CE", map->grid[y][x + 1]) != NULL)
-			encounter(map, x + 1, y);
-	}
 }

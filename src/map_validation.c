@@ -6,18 +6,19 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:39:27 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/06 15:22:24 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/09 13:54:38 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
 /*	this function checks to see if the check_path function has visited all the
-	destinations, i.e. all the collectibles. It takes the map struct and 2D bool
-	array with visited positions as arguments. It first checks if the exit has
+	destinations, i.e. all the collectibles. It first checks if the exit has
 	been visited and then it checks the collectibles
 
-	It only returns true when all the destinations have been visited */
+	arguments	: the map data struct and a 2D boolean array with visited positions
+	returns		: true when all the destinations have been visited, else false
+*/
 static bool	check_destinations(t_map_info *map, bool **visited)
 {
 	int	i;
@@ -41,15 +42,19 @@ static bool	check_destinations(t_map_info *map, bool **visited)
 }
 
 /*	this function checks to see if there's a path between player starting point,
-	all the collectibles and the exit. It takes the map struct, the player
-	starting coordinates and a 2D bool array as arguments. I made it recursively
-	for ease so I had to isolate the destinations check to it's own function.
+	all the collectibles and the exit. I made it recursively for ease so I had
+	to isolate the destinations check to it's own function
 
 	So it first checks to see if all the target destinations have been visited. If
 	not, it checks if the position itself is valid and sets it to true if it is. It
-	goes through all the connecting tiles/nodes/positions until it no longer can,
-	which is when it will return false, or until the destination check returns true,
-	which is when it returns true. */
+	goes through all the connecting tiles/nodes/positions until it no longer can or
+	until it no longer has to.
+
+	arguments	: the map data struct, the player starting coordinates (x, y) and
+				a 2D boolean array
+	returns		: false if it has gone through the entire array and destination
+				check was false. true if destination check returns true at any point
+*/
 bool	check_path(t_map_info *map, int x, int y, bool **visited)
 {
 	if (check_destinations(map, visited) == true)
@@ -74,8 +79,11 @@ bool	check_path(t_map_info *map, int x, int y, bool **visited)
 
 /*	this functions checks if the map is surrounded by walls or not.
 	it first compares the chars in the first and last row at the same time, then
-	it compares the chars in the first and last column at the same time. If, at
-	any time, the char is not '1' it wil return an error message and false. */
+	it compares the chars in the first and last column at the same time.
+
+	arguments	: the map data struct and the error message struct
+	returns		: exit_wrapper if the char is not '1', else MAP_OK
+*/
 int	check_mapwalls(t_map_info *map, t_error *errme)
 {
 	int	i;
@@ -100,16 +108,17 @@ int	check_mapwalls(t_map_info *map, t_error *errme)
 }
 
 /*	this functions checks if the given row contains only valid map components.
-	It returns 'true' if it does and 'false' if it doesn't.
 
-	It also keeps count of the player, exit and collectible count. When the
-	first 2 go over 1 it returns false, with an error message. Then it calls
+	it also keeps count of the player, exit and collectible count. Then it calls
 	on the mapcomponents_save function, since we're already at a position of
 	a component that needs to be saved
 
-	If the map consists of only the correct components and not more than 1
-	exit or starting position it's return true */
-
+	arguments	: the current row (string), the map data struct and the error
+				message struct
+	returns		: if the map consists of only the correct components and not
+				more than 1 exit or starting position it's return MAP_OK, else
+				exit_wrapper
+*/
 static int	check_mapcomponents(char *row, t_map_info *map, t_error *errme)
 {
 	int	i;
@@ -142,11 +151,12 @@ static int	check_mapcomponents(char *row, t_map_info *map, t_error *errme)
 /*	this function checks if the map has a valid shape. It first checks if it's
 	empty, then it checks if there's at least 3 columns. After that it compares
 	the length of every row to check if it's rectangular and then it checks if
-	there's at least 3 rows.
+	there's at least 3 rows. The row is then put into a function that checks
+	the map components. After this it frees the strings allocated by GNL
 
-	Free the strings allocated by GNL
-
-	The row is then put into a function that checks the map components */
+	arguments	: the file desicriptor, the map data struct, the error message struct
+	returns		: MAP_OK when all is ok, else exit_wrapper
+ */
 int	check_mapshape(int fd, t_map_info *map, t_error *errme)
 {
 	char	*row;

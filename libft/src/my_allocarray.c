@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/28 13:05:59 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/06 16:26:19 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/09 11:27:21 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	**my_allocarray(int x, int y)
 	temp = ft_calloc(y + 1, sizeof(char *));
 	if (!temp)
 		return (perror("Error\n"), NULL);
-	while (i < y + 1)
+	while (i < y)
 	{
 		temp[i] = ft_calloc(x + 1, sizeof(char));
 		if (!temp[i])

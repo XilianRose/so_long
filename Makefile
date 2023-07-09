@@ -6,7 +6,7 @@
 #    By: mstegema <mstegema@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/10 14:19:38 by mstegema      #+#    #+#                  #
-#    Updated: 2023/07/09 10:42:52 by mstegema      ########   odam.nl          #
+#    Updated: 2023/07/09 14:51:17 by mstegema      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,6 @@ NAME	= so_long
 # compilation
 CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror
-ifdef DEBUG
-CFLAGS	+= -fsanitize=address -g
-endif
 HEADER	= $(INCDIR)/so_long.h
 LIBFT	= libft/bin/libft.a
 MLX42	= MLX42/build/libmlx42.a
@@ -25,6 +22,9 @@ ifdef AT_HOME
 LINKS	= -Iinclude -lglfw -L"/opt/homebrew/Cellar/glfw/3.3.8/lib/"
 else
 LINKS	= -lglfw3 -framework Cocoa -framework OpenGL -framework IOkit
+endif
+ifdef DEBUG
+LINKS	+= -fsanitize=address -g
 endif
 
 # directories
@@ -39,6 +39,7 @@ SRCS	= src/so_long.c \
 		src/window_management.c \
 		src/load_assets.c \
 		src/rendering.c \
+		src/move_player.c \
 		src/gameplay.c \
 		src/utils.c
 
@@ -68,11 +69,14 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c $(HEADER)
 	@$(CC) -c $(CFLAGS) $< -o $@
 	@echo "Compiling: $(PURPLE)$<$(NC)"
 
-home:
-	$(MAKE) AT_HOME=1
+debughome:
+	$(MAKE) AT_HOME=1 DEBUG=1
 
 debug:
 	$(MAKE) DEBUG=1
+
+home:
+	$(MAKE) AT_HOME=1
 
 clean:
 	@$(MAKE) clean -C ./libft

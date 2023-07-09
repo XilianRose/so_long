@@ -6,12 +6,20 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/02 16:33:24 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/03 10:58:49 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/09 14:41:40 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
+/*	this is the main asset loading function. it calls on mlx_load_png to get a
+	texture from a .png file. then it creates an image data struct with the the
+	texture. the texture gets deleted at the end since it's no longer needed.
+
+	arguments	: the png file path & mlx window instance struct
+	returns		: pointer to the image struct that gets created or NULL with
+				the corresponding MLX error message
+*/
 mlx_image_t	*load_asset(char *str, mlx_t *mlx)
 {
 	mlx_texture_t	*texture;
@@ -76,6 +84,12 @@ static int32_t	load_player(t_map_info *map, mlx_t *mlx)
 	return (EXIT_SUCCESS);
 }
 
+/*	this is the function where all the asset loading functions get called.
+	some loading is done free standing some are functions.
+
+	arguments	: the map data struct & mlx window instance struct
+	returns		: EXIT_FAILURE if anything fails, else EXIT SUCCES
+*/
 int32_t	load_all(t_map_info *map, mlx_t *mlx)
 {
 	map->collect.image[0] = load_asset("assets/mouse.png", mlx);

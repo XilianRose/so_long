@@ -6,12 +6,18 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/25 15:41:22 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/06 15:43:43 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/09 14:50:22 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
+/*	this is just a little wrapper for returns if anything fails with the MLX
+	library. it prints the error message given by MLX and returns.
+
+	arguments	: the pointer to the window instance struct
+	returns		: EXIT_FAILURE
+*/
 int32_t	error(mlx_t	*mlx)
 {
 	if (mlx)
@@ -20,6 +26,13 @@ int32_t	error(mlx_t	*mlx)
 	return (EXIT_FAILURE);
 }
 
+/*	this function is where the keydata input gets connected to the right
+	actions. it handles exiting with escape, resizing of the window and
+	player movement.
+
+	arguments	: the mlx keydata struct and the map data struct
+	returns		: nothing
+*/
 static void	keyhook(mlx_key_data_t keydata, void *param)
 {
 	t_map_info	*map;
@@ -47,6 +60,16 @@ static void	keyhook(mlx_key_data_t keydata, void *param)
 		move_right(map);
 }
 
+/*	this is the big window & graphic management function where everything
+	gets weaved together.
+
+	a window instance gets initialized according to mapsize. a pointer to it
+	get stored in the map data struct and then the asset loading and rendering
+	happens. after this we set a keyhook and then the loop starts.
+
+	arguments	: the map data struct
+	returns		: EXIT_FAILURE if anything fails, else EXIT_SUCCES
+*/
 int32_t	window_management(t_map_info *map)
 {
 	mlx_t	*mlx;
@@ -58,9 +81,9 @@ int32_t	window_management(t_map_info *map)
 	map->mlx = mlx;
 	if (load_all(map, mlx) == EXIT_FAILURE
 		|| render_all(map, mlx) == EXIT_FAILURE)
-		return (mlx_terminate(mlx), EXIT_FAILURE);
+		return (mlx_terminate(map->mlx), EXIT_FAILURE);
 	mlx_key_hook(mlx, &keyhook, map);
-	mlx_loop(mlx);
+	mlx_loop(map->mlx);
 	mlx_close_window(map->mlx);
-	return (mlx_terminate(mlx), EXIT_SUCCESS);
+	return (mlx_terminate(map->mlx), EXIT_SUCCESS);
 }

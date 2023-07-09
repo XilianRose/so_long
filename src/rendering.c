@@ -6,12 +6,19 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/30 10:35:09 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/06 14:31:17 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/09 14:49:58 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
+/*	this is the main rendering function. it calls on mlx_image_to_window to
+	create an instance of an image in the window.
+
+	arguments	: mlx window instance struct, image struct and the position of
+				the tile in the grid
+	returns		: EXIT_FAILURE if anything fails, else EXIT_SUCCES
+*/
 int32_t	render_img(mlx_t *mlx, mlx_image_t *img, int x, int y)
 {
 	if (mlx_image_to_window(mlx, img, x * 32, y * 32) == -1)
@@ -19,6 +26,13 @@ int32_t	render_img(mlx_t *mlx, mlx_image_t *img, int x, int y)
 	return (EXIT_SUCCESS);
 }
 
+/*	this is the function where the grass gets rendered. there's 2 grass image
+	tiles to give the background more livelyness. to make it more natural i made
+	use of the randomizer function to render them.
+
+	arguments	: map data struct & mlx window instance struct
+	returns		: EXIT_FAILURE if anything fails, else EXIT_SUCCES
+*/
 static int32_t	render_grass(t_map_info *map, mlx_t *mlx)
 {
 	int			i;
@@ -75,6 +89,12 @@ static int32_t	render_walls(t_map_info *map, mlx_t *mlx)
 	return (EXIT_SUCCESS);
 }
 
+/*	this is where the exit and the player get rendered. these are the only ones
+	that are disabled after rendering.
+
+	arguments	: map data struct & mlx window instance struct
+	returns		: EXIT_FAILURE if anything fails, else EXIT_SUCCES
+*/
 static int32_t	render_sprites(t_map_info *map, mlx_t *mlx)
 {
 	if (render_img(mlx, map->exit.image[0], map->exit.position[0].x,
@@ -99,6 +119,12 @@ static int32_t	render_sprites(t_map_info *map, mlx_t *mlx)
 	return (EXIT_SUCCESS);
 }
 
+/*	this is the main rendering functon. it calls on the rendering functions
+	to create the images in the window.
+
+	arguments	: the map data struct, pointer to the window instance struct
+	returns		: EXIT_FAILURE if anything fails, else EXIT_SUCCES
+*/
 int32_t	render_all(t_map_info *map, mlx_t *mlx)
 {
 	int	i;
