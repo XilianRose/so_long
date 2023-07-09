@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 11:41:05 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/06 16:40:39 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/07 10:57:03 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ int	map_validation(t_file_info *file, t_map_info *map, t_error *errme)
 	check_mapshape(file->fd, map, errme);
 	close(file->fd);
 	file->fd = open(file->argv[1], O_RDONLY);
+	ft_printf("before	: %p\n", map->grid);
 	map->grid = my_allocarray(map->cols, map->rows);
+	ft_printf("after	: %p\n", map->grid);
 	if (!map->grid)
 		return (perror("Error\n"), close(file->fd), MAP_NV);
 	save_map(file->fd, map);
@@ -96,7 +98,7 @@ int	main(int argc, char **argv)
 	if (map_validation(&file, &map, &errme) == MAP_NV)
 		exit(MAP_NV);
 	close(file.fd);
-	if (window_management(&map) == EXIT_SUCCESS)
-		end_game(&map);
+	// if (window_management(&map) == EXIT_SUCCESS)
+	// 	end_game(&map);
 	exit(EXIT_FAILURE);
 }
