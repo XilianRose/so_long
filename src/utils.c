@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/04/05 13:40:32 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/09 15:39:45 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/09 21:50:38 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,5 +129,6 @@ void	error_message(t_error *errme)
 	errme->map5 = "Error\nmap contains invalid map components\n";
 	errme->map6 = "Error\nmap is not completely walled\n";
 	errme->map7 = "Error\nmap doesn't have a valid path\n";
+	errme->map8 = "Error\nmap doesn't contain all the neccesary components\n";
 	return ;
 }

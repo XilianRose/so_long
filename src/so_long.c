@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/22 11:41:05 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/09 14:14:07 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/09 21:51:05 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ static int	map_validation(t_file_info *file, t_map_info *map, t_error *errme)
 	bool		**visited;
 
 	check_mapshape(file->fd, map, errme);
+	if (map->player.count == 0 || map->exit.count == 0
+		|| map->collect.count == 0)
+		exit_wrapper(errme->map8);
 	close(file->fd);
 	file->fd = open(file->argv[1], O_RDONLY);
 	map->grid = my_allocarray(map->cols, map->rows);
