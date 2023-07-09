@@ -6,11 +6,17 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/03 13:08:18 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/09 15:15:12 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/09 16:16:04 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
+
+// void	end_game_img(t_map_info *map)
+// {
+// 	mlx_set_window_size(map->mlx, 667, 500);
+
+// }
 
 /*	this function prints a message corresponding to the game status and amount
 	of mice collected.

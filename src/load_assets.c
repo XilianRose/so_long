@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/02 16:33:24 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/09 14:41:40 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/09 16:01:48 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static int32_t	load_player(t_map_info *map, mlx_t *mlx)
 */
 int32_t	load_all(t_map_info *map, mlx_t *mlx)
 {
-	map->collect.image[0] = load_asset("assets/mouse.png", mlx);
+	map->collect.image[0] = load_asset("assets/mouse2.png", mlx);
 	if (!map->collect.image[0])
 		return (EXIT_FAILURE);
 	map->exit.image[0] = load_asset("assets/manekineko.png", mlx);
