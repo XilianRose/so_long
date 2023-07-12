@@ -6,7 +6,7 @@
 #    By: mstegema <mstegema@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/02/16 12:00:14 by mstegema      #+#    #+#                  #
-#    Updated: 2023/07/09 12:07:00 by mstegema      ########   odam.nl          #
+#    Updated: 2023/07/12 14:39:50 by mstegema      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ INCDIR = inc
 OBJDIR = obj
 BINDIR = bin
 
+# sources
 SRCS = src/ft_isalpha.c \
 	src/ft_isdigit.c \
 	src/ft_isalnum.c \
@@ -78,6 +79,7 @@ HEADER = $(INCDIR)/libft.h
 PURPLE = \033[0;35m
 NC = \033[0m
 
+# rules
 all: $(BINDIR)/$(NAME)
 
 $(BINDIR)/$(NAME): $(OBJS)
