@@ -6,7 +6,7 @@
 /*   By: mstegema <mstegema@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/03/02 12:46:26 by mstegema      #+#    #+#                 */
-/*   Updated: 2023/07/09 21:47:49 by mstegema      ########   odam.nl         */
+/*   Updated: 2023/07/16 15:17:48 by mstegema      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,33 +78,40 @@ typedef struct s_error {
 }	t_error;
 
 /*	map_validation	*/
+
 int			check_mapshape(int fd, t_map_info *map, t_error *errme);
 int			check_mapwalls(t_map_info *map, t_error *errme);
 bool		check_path(t_map_info *map, int x, int y, bool **visited);
 
 /*	window_management	*/
+
 int32_t		window_management(t_map_info *map);
 int32_t		error(mlx_t	*mlx);
 
 /*	load_assets	*/
+
 int32_t		load_all(t_map_info *map, mlx_t *mlx);
 mlx_image_t	*load_asset(char *str, mlx_t *mlx);
 
 /*	rendering	*/
+
 int32_t		render_all(t_map_info *map, mlx_t *mlx);
 int32_t		render_img(mlx_t *mlx, mlx_image_t *img, int x, int y);
 
 /*	move_player	*/
+
 void		move_up(t_map_info *map);
 void		move_down(t_map_info *map);
 void		move_left(t_map_info *map);
 void		move_right(t_map_info *map);
 
 /*	gameplay	*/
+
 void		encounter(t_map_info *map, int x, int y);
 void		end_game(t_map_info *map);
 
 /*	utils	*/
+
 void		error_message(t_error *errme);
 void		initialize_map_info(t_map_info *map);
 void		exit_wrapper(char *str);
